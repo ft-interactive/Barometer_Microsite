@@ -8,7 +8,9 @@
 
 #ftiContainer {width:970px;}
 
-#ftiContainer #ftiMainMenu {width:100%; border-top: solid 4px #A7A59B; border-bottom: solid 1px #A7A59B; background-color: #E9DECF;float:left; margin-top:20px; margin-bottom:20px;}
+#ftiContainer #ftiMainMenu {width:100%; border-top: solid 4px #A7A59B; border-bottom: solid 1px #A7A59B; background-color: #E9DECF;float:left; margin-top:20px; margin-bottom:20px; padding-left:16px; text-transform:uppercase;}
+
+#ftiContainer #ftiMainMenu a {font-weight: bold; list-style:none;  color:#000;}
 
 #ftiContainer #ftiMainMenu ul { margin-bottom:16px;}
 
@@ -16,11 +18,17 @@
 
 #ftiContainer #ftiMainMenu ul li#logo {float:left;}
 
-#ftiContainer #ftiMainMenu ul li a {; color:#000;}
+#ftiContainer #ftiMainMenu ul li a {color:#000;}
 
 #ftiContainer #ftiMainMenu ul li a:hover {}
 
 #ftiContainer #ftiMainMenu ul li a:selected {}
 
+#ftiContainer #ftiMainContent {width:100%; font-family: Georgia, "Times New Roman", Times, serif;}
 
-#ftiContainer #ftiMainContent {width:100%; }
+#ftiContainer #ftiMainContent h2 {font-size:24px; font-weight:bold;}
+
+#ftiContainer #ftiCredits {font-size:10px; color:#A7A59B;}
+#ftiContainer #ftiCredits p {line-height:12px;}
+
+#ftiApp {margin: 20px 20px 20px 20px ;}
