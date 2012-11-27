@@ -8,12 +8,19 @@
 
 #ftiContainer {width:970px;}
 
-#ftiContainer #ftiMainMenu {}
+#ftiContainer #ftiMainMenu {width:100%; border-top: solid 4px #A7A59B; border-bottom: solid 1px #A7A59B; background-color: #E9DECF;float:left; margin-top:20px; margin-bottom:20px;}
 
-#ftiContainer #ftiMainMenu ul {}
+#ftiContainer #ftiMainMenu ul { margin-bottom:16px;}
 
-#ftiContainer #ftiMainMenu ul li {}
+#ftiContainer #ftiMainMenu ul li {font-weight: bold; list-style:none; text-transform:uppercase; float:right; padding: 12px; 0 1px 0 1px;}
 
-#ftiContainer #ftiMainMenu ul li a {}
+#ftiContainer #ftiMainMenu ul li#logo {float:left;}
 
-#ftiContainer #ftiMainContent {width:100%;}
+#ftiContainer #ftiMainMenu ul li a {; color:#000;}
+
+#ftiContainer #ftiMainMenu ul li a:hover {}
+
+#ftiContainer #ftiMainMenu ul li a:selected {}
+
+
+#ftiContainer #ftiMainContent {width:100%; }
