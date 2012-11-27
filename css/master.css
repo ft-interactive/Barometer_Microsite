@@ -8,21 +8,34 @@
 
 #ftiContainer {width:970px;}
 
-#ftiContainer #ftiMainMenu {width:100%; border-top: solid 4px #A7A59B; border-bottom: solid 1px #A7A59B; background-color: #E9DECF;float:left; margin-top:20px; margin-bottom:20px; padding-left:16px; text-transform:uppercase;}
+/* menu bar */
 
-#ftiContainer #ftiMainMenu a {font-weight: bold; list-style:none;  color:#000;}
+#ftiContainer #ftiMainMenu {width:100%; border-top: solid 4px #A7A59B; border-bottom: solid 1px #A7A59B; background-color: #E9DECF; float:left; margin-top:20px; margin-bottom:20px; text-transform:uppercase; font-size:0.8em; line-height:0.8em;}
 
-#ftiContainer #ftiMainMenu ul { margin-bottom:16px;}
+#ftiContainer #ftiMainMenu .tiny {font-size:0.5em; line height:0.5em;}
 
-#ftiContainer #ftiMainMenu ul li {font-weight: bold; list-style:none; text-transform:uppercase; float:right; padding: 12px; 0 1px 0 1px;}
+.menuSection {float:left; height:100%; margin-left:8px; margin-right:8px; margin-top:2px;}
 
-#ftiContainer #ftiMainMenu ul li#logo {float:left;}
+.menuSection #logo {float:left; height:100%; margin-left:8px; margin-right:8px; margin-top:2px;}
+
+.menuSection #selector {float:right; height:100%;}
+
+#ftiContainer #ftiMainMenu form {float:right;}
+
+#ftiContainer #ftiMainMenu a {font-weight: bold; list-style:none; color:#000;}
+
+#ftiContainer #ftiMainMenu ul {margin:0; padding:0;}
+
+#ftiContainer #ftiMainMenu ul li {font-weight: bold; list-style:none; text-transform:uppercase; float:left; padding-right:24px;}
 
 #ftiContainer #ftiMainMenu ul li a {color:#000;}
 
 #ftiContainer #ftiMainMenu ul li a:hover {}
 
 #ftiContainer #ftiMainMenu ul li a:selected {}
+
+
+/* main content area */
 
 #ftiContainer #ftiMainContent {width:100%; font-family: Georgia, "Times New Roman", Times, serif;}
 

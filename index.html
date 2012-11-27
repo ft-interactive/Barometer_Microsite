@@ -5,24 +5,46 @@
 <title>FT-Economist Business Barometer - Financial Times</title>
 
 <link rel="stylesheet" type="text/css" media="all" href="css/master.css" />
-
 </head>
 
 <body>
 
-
 <div id="ftiContainer">
+
+
+<!-- Menu starts -->
+
 <div id="ftiMainMenu">
-<a href="#"><img src="img/logo.gif" width="61" height="30" alt="Barometer" /> BUSINESS BAROMETER </a>
-    	<!-- <ul>
-        <li id="logo"></li>
-        <li></li>
-        <li><a href="#">Confidence</a></li>
-        <li><a href="#">Friendliness</a></li>
-        <li><a href="#">Risk &amp; Regulation</a></li>
-        <li><a href="#">Topical questions</a></li>
-        </ul> -->
+	
+	
+	<div class="menuSection" id="branding"><img src="img/logo.gif" width="61" height="30" alt="logo" /><a href="#"><span class="tiny">FT-Economist Global</span><br/>
+    Business&nbsp;Barometer</a></div>
+<div class="menuSection" id="menuItems">
+    	<ul>
+        <li><a href="#"><span class="tiny">Business</span><br/>Confidence</a></li>
+        <li><a href="#"><span class="tiny">Government</span><br/>Friendliness</a></li>
+        <li><a href="#"><span class="tiny">Attitudes to</span><br/>Risk &amp; Regulation</a></li>
+        <li><a href="#"><span class="tiny">Current</span><br/>Topical questions</a></li>
+        </ul>
+    
     </div>
+    <div class="menuSection" id="selector">
+      <form action="" method="get" enctype="application/x-www-form-urlencoded" target="_top">        <select name="quarter">
+          <option value="1">February</option>
+          <option value="2">May</option>
+          <option value="3">August</option>
+          <option value="4" selected="selected">November</option>
+        </select>
+        <select name="year">
+          <option value="2012">2012</option>
+          <option value="2011">2011</option>
+        </select>
+    </form>
+    </div>
+ </div>
+ 
+ <!-- Menu ends -->
+ 
   <div id="ftiMainContent">
    	<h2>Business confidence</h2>
     <p>What are your expectations of business conditions for your company, your industry and the global economy, over the next six months?</p>
