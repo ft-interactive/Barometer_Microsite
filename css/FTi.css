@@ -1,0 +1,266 @@
+#FTi{}
+#FTi .wideWidth { width:972px; position: relative; left:0px; top:0px;}
+#FTi .narrowWidth { width:600px; position: relative; left:0px; top:0px;}
+#FTi .narrowWidth .title {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:24px;
+	color: #333;
+	padding:2px 0px 6px 0px;
+	background-color:#fff1e0;
+	height:24px;
+	border-top: 8px solid #e9decf;
+}
+
+#FTi .wideWidth .title {
+	padding-top:2px;
+	background-color:#fff1e0;
+	border-top: 8px solid #e9decf;
+}
+
+#FTi .content{
+	background-color: #fff1e0;
+	padding-top: 8px;
+	height:570px;
+	overflow:hidden;
+	z-index:200;
+	font-size:14px;
+	color:#74736c;
+}
+#FTi .narrowWidth .loader{
+	position:absolute;
+	z-index:500;
+	color:#666;
+}
+
+#FTi .wideWidth .content .loader{
+	position:relative;
+	z-index:500;
+	color:#666;	
+	height: 600px;
+	background-color: #fff1e0
+}
+
+#FTi .narrowWidth .content .loader #loaderGif{
+	position:relative;
+	z-index:500;
+	top:150px;
+	left:215px;
+}
+
+#FTi .narrowWidth #preLoader div p {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	position: relative;
+	top: 180px;
+	left:275px;
+	color:#CEC6B9;
+}
+
+#FTi .footer {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color: #2e6e9e;
+	left: 0px;
+	background-color: #fff1e0;
+	padding: 2px 0px 0px 0px;
+	border-top: 1px solid #d9cdbe;
+}
+#FTi #source a{
+	text-decoration:none;
+	color: #2e6e9e;
+}
+
+#FTi #source{
+	text-decoration:none;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#a7a59b;	
+	line-height:16px;
+}#FTi .divLinks {
+	background-color: #fff1e0;
+	float: right;
+	padding-top: 0px;
+	padding-right: 10px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	z-index:2000;
+}
+	
+#FTi .divNav {
+	color: #666;
+	height: 27px;
+	margin:0;
+	float: right;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	right: 12px;
+	padding: -29px;
+	position: absolute;
+	clip: rect(auto,auto,auto,auto);
+	top: 19px;
+}
+#FTi .divNav ul  {
+	list-style-type: none;
+}
+#FTi .divNav ul li   {
+	float: left;
+}
+
+#FTi .divNav ul li a  {
+	display:block;
+	height: 30px;
+	line-height: 20px;
+	background-color: #a7a59b;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #514d44;
+	text-align:center;
+	text-decoration:none;
+	margin: 3px;
+	
+	/*Border Radius*/
+	border-radius: 5px;
+	-moz-outline-radius:5px;
+	-webkit-border-radius: 5px;
+	background-position: left top;
+	
+	/*Gradients*/
+	background-color: #cec6b9;
+	border: 1px solid #bbb4a8;
+	padding: 0px 8px 0px 8px;
+ 
+}
+
+#FTi .divNav ul li a:hover  {
+	background-color:#a7a59b;
+	color: #FFF;
+}
+
+#FTi .divNav ul li a:active {
+	color: #FFF;
+	background-color: #4781aa;
+	border: 1px solid #40759a;
+	cursor: default;
+}
+
+
+
+#FTi .divNav ul li a.current, .divNav ul li a.current:hover  {
+	background-color:#4781aa;
+	color:#FFFFFF;
+	cursor:default;
+	border: 1px solid #40759a;
+}
+	
+	  
+#FTi #button {
+	height: 32px;
+	width: 230px;
+	position: absolute;
+	top:60px;
+	left: 280px;
+}
+
+ul, li {
+	margin:0; 
+	padding:0; 
+	list-style:none;
+}
+
+.menu_class {
+	border:1px solid #4781aa;
+	cursor:pointer;
+}
+
+.the_menu {
+	display:none;
+	width:226px;
+	border-width: 1px 2px 2px 2px;
+	border-color: #4781aa;
+	border-style:solid;
+}
+
+.the_menu li {
+	background-color: #fff;
+	border-bottom: solid 1px #ccc;
+}
+
+.the_menu li a {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#333; 
+	text-decoration:none; 
+	padding:5px; 
+	display:block;
+}
+
+.the_menu li a:hover {
+	padding:5px;
+	font-weight:reg;
+	background-color:#eee;
+}
+
+td {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	
+}
+
+.instruction
+{	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:15px;
+	font-style:italic;
+	color: #9b164f;
+	position:absolute;
+	left:675px;
+	top:59px;
+	width: 200px;
+}
+
+.checkbox, .radio {
+	width: 19px;
+	height: 25px;
+	padding: 0 5px 0 0;
+	background: url(../img/graphics/inactive.png) no-repeat;
+	display: block;
+	clear: left;
+	float: left;
+}
+.radioSelected {
+	background: url(../img/graphics/active.png) no-repeat;
+}
+
+.radioUp {
+	background: url(../img/graphics/inactive.png) no-repeat;
+}
+
+.radioTable {
+	cursor:pointer;
+}
+.select {
+	position: absolute;
+	width: 158px; /* With the padding included, the width is 190 pixels: the actual width of the image. */
+	height: 25px;
+	padding: 0 24px 0 8px;
+	color: #fff;
+	font: 12px/12px arial,sans-serif;
+	background: url(../img/graphics/inactive.png) no-repeat;
+	overflow: hidden;
+}
+
+.toolTip
+{
+	background-color: #fff;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	padding:5px;
+	position: absolute;
+	border: 1px solid #4781aa;
+	color:#333;
+	opacity:0;
+	width:200px;
+	-moz-box-shadow: 1px 1px 2px #999;
+3.
+	-webkit-box-shadow: 1px 1px 2px #999;
+	4.
+	box-shadow: 1px 1px 2px #999;
+}
