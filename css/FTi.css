@@ -264,3 +264,44 @@ td {
 	4.
 	box-shadow: 1px 1px 2px #999;
 }
+/*
+added by p.feeney 3-dec-2012 
+*/
+#FTi #tab_0 .key {position: absolute; top: 200px; left: 14px;}
+#FTi #tab_0 .key .legend {vertical-align:6px; margin-right: 20px; margin-left: 5px}
+#FTi #tab_0 .pieKey {position: absolute; top: 190px; left: 660px;}
+#FTi #tab_0 #allPies #container_globalPie {width: 866px; height: 330px; position: absolute; top: 300px; left: 14px;  z-index:500; pointer-events:none}
+#FTi #tab_0 #allPies #container_pie {width: 866px; height: 200px; position: absolute; top: 360px; left: 6px; z-index:600}
+#FTi #tab_0 #allPies .questionBox_0 {
+				position: absolute;
+				top: 600px;
+				left: 40px
+				text-align: center;
+				color:#333;
+				z-index:610;
+				line-height:28px;
+				font-family:Georgia, "Times New Roman", Times, serif;
+				}
+#FTi #tab_0 #allPies .questionBox_1 {
+				position: absolute;
+				top: 600px;
+				left: 330px;
+				text-align: center;
+				color:#333;
+				z-index:611;
+				line-height:28px;
+				font-family:Georgia, "Times New Roman", Times, serif;
+				}
+#FTi #tab_0 #allPies .questionBox_2 {
+				position: absolute;
+				top: 600px;
+				left: 620px;
+				text-align: center;
+				color:#333;
+				z-index:612;
+				line-height:28px;
+				font-family:Georgia, "Times New Roman", Times, serif;
+				}
+#FTi #tab_1 #container_friendliness_table {width: 862px; height: 260px; position: absolute; top:175px; left: 12px; z-index:600}
+#FTi #tab_1 #container_friendliness {width: 876px; height: 235px; position: absolute; top: 500px; left: 6px; z-index:600}
+#FTi #tab_2 #container_barRisks {width: 876px; height: 550px; position: absolute; top: 180px; left: 6px; z-index:600}
