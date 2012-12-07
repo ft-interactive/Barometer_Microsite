@@ -1,7 +1,6 @@
 /*
 script file for Business Barometer - Peter Feeney 30th November 2012
 */
-console.log(':');
 var FT = FT || {};
 FT.Interactive = FT.Interactive || {};
 FT.Interactive.dataFriendliness = [];
@@ -25,30 +24,12 @@ FT.Interactive.catTitles = ["REGION",
 						   "TURNOVER", 
 						   "ALL"
 						   ];						   
-
+ 
 FT.Interactive.ddFlag = false;
 FT.Interactive.dataPointer_0 = 4;
 FT.Interactive.dataPointer_1 = 0;
-var tabLength = 0;
-var chart_1;
-var chart_2;
-var chart_3;
-var chart_4;
-var chart_5;
-var mArr = {
-			Jan: 0,
-			Feb: 1,
-			Mar: 2,
-			Apr: 3,
-			May: 4,
-			Jun: 5,
-			Jul: 6,
-			Aug: 7,
-			Sep: 8,
-			Oct: 9,
-			Nov: 10,
-			Dec: 11
-			};
+var chart_1,chart_2,chart_3,chart_4,chart_5;
+
 // add data source URL here
 FT.Interactive.dataSource = 'http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=219&id=36&y=2012&q=3';
 
@@ -134,6 +115,8 @@ FT.Interactive.options_0 = {
 				chart: {
 					renderTo: 'container_friendliness',
 					defaultSeriesType: 'column',
+					height:175,
+					width:900
 				},
 				title: {
 					text: ''
@@ -206,6 +189,8 @@ FT.Interactive.options_0 = {
 				chart: {
 					renderTo: 'container_barRisks',
 					defaultSeriesType: 'bar',
+					 width: 900,
+					 height:500
 				},
 				title: {
 					text: ''
@@ -365,9 +350,7 @@ FT.Interactive.options_0 = {
 			};
 function initGraphic(f){
 	//console.log('func:initGraphic');
-	$(".title")
-		.empty()
-		.append(f.graphic_title);
+	//$(".title").empty().append(f.graphic_title);
 	//$("#source").append("<i>" + f.source + "</i>");
 	//$("#credits").append(" • Edited by " + f.edit_credits + " • Developed by " + f.design_credits);
 	//$(".footer").css( "height", $("#credits").height() +5+"px" );
@@ -384,7 +367,6 @@ function yqlUrl(url){
 	return rVal;
 };
 $(document).ready(function() {
-	console.log(':');
 				$("#dropDown_1").css('display', 'none');
 				function ucfirst(str) {
 					var firstLetter = str.slice(0,1);
@@ -396,44 +378,33 @@ $(document).ready(function() {
 				$('#dropDown_1').click(function () {
 					$('#ddList_1').slideToggle('fast');
 				});
-
-				$.getJSON(yqlUrl(FT.Interactive.dataSource), function(ds){}).success(createOptions);
-				
-				function createOptions(ds){
-					//console.log('func:createOptions');
-					FT.Interactive.dataset = ds.query.results.dataset;
-					//console.log(FT.interactive.dataset)
-					FT.Interactive.ddArray = [];
-					FT.Interactive.dataFriendliness = [];
-					FT.Interactive.dataThreat = [];
-					FT.Interactive.dataCountries = [];
-					//$('#preloader').css('display','none');
-					FT.Interactive.catsArray[(FT.Interactive.catsArray.length-1)] = 'All (' + ds.query.results.dataset.standardQuestions.n + ')';
-					if (FT.Interactive.ddFlag == false) {
-						initGraphic(ds.query.results.dataset.pagefurniture);
-						$("#dd_title_0").empty();
-						$("#dd_title_0").append(FT.Interactive.catsArray[4]);
-						//$("#sectionBlurb").empty();
-						var sectionBlurb = "<span style='font-size:20px; line-height: 18px'>";
-						sectionBlurb += "<b>" + ds.query.results.dataset.barometerConfig.tab[0].questionHeading + "</b>";
-						sectionBlurb += "<br>";
-						sectionBlurb += "<span style='font-size:13px'>" + ds.query.results.dataset.barometerConfig.tab[0].questionDetail;
-						$("#sectionBlurb").html(sectionBlurb);
-						//for(j=0; j<FT.Interactive.catsArray.length; j++) {
-//							$("#ddList_0").append("<li id= "+j+"><a>" + FT.Interactive.catsArray[j] + "</a></li>");
-//						}
-						$(ds.query.results.dataset.filtermenus.item)
-						.each( function(k){
-							FT.Interactive.ddMenu.push({
-								type:$(this).attr('menu'),
-								label:$(this).attr('label'),
-								urlCode:$(this).attr('code'),
-								menuNum:$(this).attr('n')
-							})
-						})
-						
-						//*************create tabs****************
-						$(ds.query.results.dataset.barometerConfig.tab)
+				function wrBlurb(pointer){
+					var blurb = FT.Interactive.dataset.barometerConfig;
+					$('#blurbTitle').html(blurb.tab[pointer].questionHeading);
+					$('#blurbText').html(blurb.tab[pointer].questionDetail);
+				};
+				function wrDateSelector(){
+					
+					for(var i=0; i<yrLen; i++){
+						$('#yrList.ul').append("<li><a href='#' id='" + i +"' >" + dataset[i].year + "</a></li>");
+					}
+					for(var i=0; i<qtrLen; i++){
+						$('#yrList.ul').append("<li><a href='#' id='" + i +"' >" + dataset[i].qtr + "</a></li>");
+					}
+					$('#yrList.ul li a').bind("click", function(event){
+						/*
+							assume if no quarter selected first quarter, 
+							otherwise use the one currently selected unless 
+							that value is not available inthat year
+						*/
+					});
+					$('#qtrList.ul li a').bind("click", function(event){
+					
+					});
+				};
+				function crTabs(){
+					//*************create tabs****************
+					$(FT.Interactive.dataset.barometerConfig.tab)
 						.each( function(k){
 							var tStr = '';
 							if(k==0) {
@@ -443,112 +414,77 @@ $(document).ready(function() {
 								$("#tab_" + k).css('display', 'none');
 							}
 							$('#divNav ul').append("<li><a href='#' " + tStr + "id='" + this.id +"' >" + this.name + "</a></li>");
-							tabLength++;
-						})
-						
-						$("#divNav ul li a").bind("click", function(event){ 
+						});
+					// functionality which adds the event which change the css on tabs and the blurb text
+					$("#divNav ul li a").bind("click", function(event){ 
 							$("#divNav ul li a").removeClass('current');
 							$(this).addClass('current');
-							//$("#sectionBlurb").empty();
-							var sectionBlurb = "<span style='font-size:20px; line-height: 18px'>";
-							sectionBlurb += "<b>" +ds.query.results.dataset.barometerConfig.tab[this.id].questionHeading + "</b>";
-							sectionBlurb += "<br>";
-							sectionBlurb += "<span style='font-size:13px'>" + ds.query.results.dataset.barometerConfig.tab[this.id].questionDetail;
-							$("#sectionBlurb").html(sectionBlurb);
-							for(i=0; i < tabLength; i++) {
-								$("#tab_" + i).css('display', 'none');
-								$("#tab_" + this.id).css('display', 'block');
+							wrBlurb(this.id);
+							if(this.id === '3'){
+								
+							}
+							for(var i=0; i < $("#divNav ul li a").length; i++) {
+								i == this.id?$("#tab_" + this.id).css('display', 'block'):$("#tab_" + i).css('display', 'none');
+
 							}
 						});
-						
-						/**********Create global pie charts************/
-						$(ds.query.results.dataset.standardQuestions.pies.pie)
-						.each( function(i){
-							var _d={
-								name: '',
-								data: [],
-								type:'pie',
-								center:[],
-								};
-							var item;
-							_d.name = $(this).attr('question');
-							_d.center.push([((i+1) * 35) - 20 + "%"])
-							var _n, _v, _c
-							for(item in this.option){	
-									_n = this.option[item].name
-									_v = Number(this.option[item].content); 
-									_d.data.push([_n,_v]);
-							}
-							FT.Interactive.options_0.colors = FT.Interactive.globalPieColours;
-							FT.Interactive.options_0.series.push(_d);
-						})
-						var chart_0 = new Highcharts.Chart(FT.Interactive.options_0);
-					}
-					/**********End global pie charts************/
+				
+				};
+				function crTab_0_Content(){
+				
+					/**********Create global pie charts************/
+					$(FT.Interactive.dataset.standardQuestions.pies.pie)
+					.each( function(i){
+						var _d={
+							name: '',
+							data: [],
+							type:'pie',
+							center:[],
+							};
+						var item;
+						_d.name = $(this).attr('question');
+						_d.center.push([((i+1) * 35) - 20 + "%"])
+						var _n, _v, _c
+						for(item in this.option){	
+								_n = this.option[item].name
+								_v = Number(this.option[item].content); 
+								_d.data.push([_n,_v]);
+						}
+						FT.Interactive.options_0.colors = FT.Interactive.globalPieColours;
+						FT.Interactive.options_0.series.push(_d);
+					})
+					var chart_0 = new Highcharts.Chart(FT.Interactive.options_0);
+				
+				};
+				function crTab_1_Content(){
+					var fTable = FT.Interactive.dataset.standardQuestions.countryFriendliness.country;
+					var fTableStr = '<table id ="friendlyTable" class="tablesorter" cellspacing="0">';
+					for(var i=0; i<fTable.length; i++){
+						if(i==0){
+							fTableStr += '<thead>';
+							fTableStr += '<tr><th class="header">COUNTRY</th><th class="header">VERY FRIENDLY</th><th class="header">FRIENDLY</th><th class="header">NEUTRAL</th><th class="header">UNFRIENDLY</th><th class="header">VERY UNFRIENDLY</th></tr>';
+							fTableStr += '</thead>';
+							fTableStr += '<tbody>';
+						}
+						fTableStr += '<tr>';
+						fTableStr += '<td>' + fTable[i].name + '</td>';
+						for(var j=0; j<5; j++){
+							fTableStr += '<td>' + Number(fTable[i].option[j].content).toFixed(1) + '</td>';
+						}
+						fTableStr += '</tr>';
+					};
+					fTableStr += '</tbody>';
+					fTableStr += '</table>';
+					//console.log('fTable:' + fTableStr);
+					$('#container_friendliness_table').html(fTableStr);
+					$("#friendlyTable")
+					.tablesorter(
+					{	
+						widgets: ['zebra'],
+						sortList:[[1,1]]
+					});
 					
-					if (FT.Interactive.ddFlag == true) {
-						/**********Create pie charts************/
-						$(ds.query.results.dataset.standardQuestions.pies.pie)
-						.each( function(i){
-							var _d={
-								name: '',
-								data: [],
-								type:'pie',
-								center:[],
-								};
-							var item;
-							_d.name = $(this).attr('question');
-							_d.center.push([((i+1) * 35) - 19 + "%"])
-							var _n, _v, _c
-							for(item in this.option){	
-									_n = this.option[item].name
-									_v = Number(this.option[item].content); 
-									_d.data.push([_n,_v]);
-							}
-							FT.Interactive.options_1.colors = FT.Interactive.pieColours;
-							FT.Interactive.options_1.plotOptions.series = {
-								animation: false
-							}
-							FT.Interactive.options_1.series.push(_d);
-						})
-						$("#container_pie").empty();
-						chart_1 && chart_1.destroy();
-						chart_1 = null;
-						chart_1 = new Highcharts.Chart(FT.Interactive.options_1);
-					}
-					/**********End pie charts************/
-					
-					/**********Create friendliness datagrid************/
-						var fTable = FT.Interactive.dataset.standardQuestions.countryFriendliness.country;
-						var fTableStr = '<table id ="friendlyTable" class="tablesorter" cellspacing="0">';
-						for(var i=0; i<fTable.length; i++){
-							if(i==0){
-								fTableStr += '<thead>';
-								fTableStr += '<tr><th class="header">COUNTRY</th><th class="header">VERY FRIENDLY</th><th class="header">FRIENDLY</th><th class="header">NEUTRAL</th><th class="header">UNFRIENDLY</th><th class="header">VERY UNFRIENDLY</th></tr>';
-								fTableStr += '</thead>';
-								fTableStr += '<tbody>';
-							}
-							fTableStr += '<tr>';
-							fTableStr += '<td>' + fTable[i].name + '</td>';
-							for(var j=0; j<5; j++){
-								fTableStr += '<td>' + Number(fTable[i].option[j].content).toFixed(1) + '</td>';
-							}
-							fTableStr += '</tr>';
-						};
-						fTableStr += '</tbody>';
-						fTableStr += '</table>';
-						//console.log('fTable:' + fTableStr);
-						$('#container_friendliness_table').html(fTableStr);
-						$("#friendlyTable")
-						.tablesorter(
-						{	
-							widgets: ['zebra'],
-							sortList:[[1,1]]
-						}); 
-						/**********End friendliness datagrid************/
-						
-						/**********Create friendliness bar charts************/
-						var _d0={
+					var _d0={
 							name: "'Friendly' or 'very friendly' to business'",
 							data: []
 							};
@@ -557,7 +493,7 @@ $(document).ready(function() {
 							data: []
 							};
 							var _sFriendly=[];
-					$(ds.query.results.dataset.standardQuestions.countryFriendliness.country)
+					$(FT.Interactive.dataset.standardQuestions.countryFriendliness.country)
 					.each( function(i){
 							_sFriendly.push($(this).attr('name'));
 								
@@ -579,13 +515,12 @@ $(document).ready(function() {
 					$("#container_friendliness").empty();
 					chart_2 && chart_2.destroy();
 					chart_2 = null;
-					chart_2 = new Highcharts.Chart(FT.Interactive.options_2);
-					
-					/**********End friendliness bar charts************/
-					
-					
-					/**********Create threats bar charts************/
-					$(ds.query.results.dataset.standardQuestions.threats)
+					chart_2 = new Highcharts.Chart(FT.Interactive.options_2); 
+				};
+				
+				function crTab_2_Content(){
+				
+					$(FT.Interactive.dataset.standardQuestions.threats)
 					.each( function(i){
 						var _d={
 								name: '',
@@ -613,14 +548,81 @@ $(document).ready(function() {
 					chart_3 && chart_3.destroy();
 					chart_3 = null;
 					chart_3 = new Highcharts.Chart(FT.Interactive.options_3);
+				
+				};
+				$.getJSON(yqlUrl(FT.Interactive.dataSource), function(ds){}).success(createOptions);
+				
+				function createOptions(ds){
+					//console.log('func:createOptions');
+					FT.Interactive.dataset = ds.query.results.dataset;
+					FT.Interactive.ddArray = [];
+					FT.Interactive.dataFriendliness = [];
+					FT.Interactive.dataThreat = [];
+					FT.Interactive.dataCountries = [];
+					//$('#preloader').css('display','none');
+					FT.Interactive.catsArray[(FT.Interactive.catsArray.length-1)] = 'All (' + ds.query.results.dataset.standardQuestions.n + ')';
+					if (FT.Interactive.ddFlag == false) {
+						initGraphic(ds.query.results.dataset.pagefurniture);
+						$("#dd_title_0").empty();
+						$("#dd_title_0").append(FT.Interactive.catsArray[4]);
+						wrBlurb(0);
+						
+						$(FT.Interactive.dataset.filtermenus.item)
+						.each( function(k){
+							FT.Interactive.ddMenu.push({
+								type:$(this).attr('menu'),
+								label:$(this).attr('label'),
+								urlCode:$(this).attr('code'),
+								menuNum:$(this).attr('n')
+							})
+						})
+						
+						
+						crTabs();
+						crTab_0_Content();
+						
+					}
+					/**********End global pie charts************/
 					
-					/**********End threats bar charts************/
+					if (FT.Interactive.ddFlag == true) {
+						/**********Create pie charts************/
+						console.log(':');
+						$(FT.Interactive.dataset.standardQuestions.pies.pie)
+						.each( function(i){
+							var _d={
+								name: '',
+								data: [],
+								type:'pie',
+								center:[],
+								};
+							var item;
+							_d.name = $(this).attr('question');
+							_d.center.push([((i+1) * 35) - 19 + "%"])
+							var _n, _v, _c
+							for(item in this.option){	
+									_n = this.option[item].name
+									_v = Number(this.option[item].content); 
+									_d.data.push([_n,_v]);
+							}
+							FT.Interactive.options_1.colors = FT.Interactive.pieColours;
+							FT.Interactive.options_1.plotOptions.series = {
+								animation: false
+							}
+							FT.Interactive.options_1.series.push(_d);
+						})
+						$("#container_pie").empty();
+						chart_1 && chart_1.destroy();
+						chart_1 = null;
+						chart_1 = new Highcharts.Chart(FT.Interactive.options_1);
+					}
+
 					
+					crTab_1_Content();
+					crTab_2_Content();
 					
-					
-					/**********End topical questions************/
 					$("#ddList_0 li").unbind();
 					$("#ddList_0 li").bind("click", function() {
+						
 						var countDD = 0;
 						var text = $(this).text();
 						$("#dd_title_0").empty();
@@ -630,12 +632,16 @@ $(document).ready(function() {
 						$("#dropDown_1").css('display', 'block');
 						$("#ddSection").empty();
 						$("#ddSection").append("2. " + FT.Interactive.catTitles[FT.Interactive.dataPointer_0] + " (NO. OF RESPONDENTS)");
-						FT.Interactive.tmpCatArray = []
+						FT.Interactive.tmpCatArray = [];
+						console.log(':' + this.id);
 						if (FT.Interactive.dataPointer_0 == 4) {
 							$("#dropDown_1").css('display', 'none');
-							$("#container_pie").empty();
+							$("#container_pie").css('visibility', 'hidden');
+							
 							chart_1 && chart_1.destroy();
 							chart_1 = null;
+							$("#container_pie").empty();
+							$("#container_pie").html('');
 							//http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=166&id=36&y=2012&q=2
 							// http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=219&id=36&y=2012&q=3
 							FT.Interactive.dataSource = 'http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=219&id=36&y=2012&q=3'
@@ -643,13 +649,15 @@ $(document).ready(function() {
 							$.getJSON(yqlUrl(FT.Interactive.dataSource), function(ds){}).success(createOptions);
 							$("#chartLabel").empty();
 							$("#chartLabel").append("<b>All respondents</b>");
+						} else{
+							$("#container_pie").css('visibility', 'visible');
 						}
 						for(k=0; k<FT.Interactive.ddMenu.length; k++) {
 							
 							switch(Number(FT.Interactive.dataPointer_0)) {
 								case 0:
 									if(FT.Interactive.ddMenu[k].type == 'region') {
-										$("#ddList_1").append("<li id= "+countDD+"><a>" + FT.Interactive.ddMenu[k].label + "<span style='font-size:11px'><i> (" + FT.interactive.ddMenu[k].menuNum + ")</i></span></a></li>");
+										$("#ddList_1").append("<li id= "+countDD+"><a>" + FT.Interactive.ddMenu[k].label + "<span style='font-size:11px'><i> (" + FT.Interactive.ddMenu[k].menuNum + ")</i></span></a></li>");
 										FT.Interactive.tmpCatArray.push(FT.Interactive.ddMenu[k].urlCode);
 										countDD++
 									}
@@ -663,15 +671,15 @@ $(document).ready(function() {
 								break;
 								case 2:
 									if(FT.Interactive.ddMenu[k].type == 'job') {
-										$("#ddList_1").append("<li id= "+countDD+"><a>" + FT.Interactive.ddMenu[k].label + "<span style='font-size:11px'><i> (" + FT.interactive.ddMenu[k].menuNum + ")</i></span></a></li>");
+										$("#ddList_1").append("<li id= "+countDD+"><a>" + FT.Interactive.ddMenu[k].label + "<span style='font-size:11px'><i> (" + FT.Interactive.ddMenu[k].menuNum + ")</i></span></a></li>");
 										FT.Interactive.tmpCatArray.push(FT.Interactive.ddMenu[k].urlCode);
 										countDD++
 									}
 								break;	
 								case 3:
 									if(FT.Interactive.ddMenu[k].type == 'size') {
-										$("#ddList_1").append("<li id= "+countDD+"><a>" + FT.Interactive.ddMenu[k].label + "<span style='font-size:11px'><i> (" + FT.interactive.ddMenu[k].menuNum + ")</i></span></a></li>");
-										FT.Interactive.tmpCatArray.push(FT.interactive.ddMenu[k].urlCode);
+										$("#ddList_1").append("<li id= "+countDD+"><a>" + FT.Interactive.ddMenu[k].label + "<span style='font-size:11px'><i> (" + FT.Interactive.ddMenu[k].menuNum + ")</i></span></a></li>");
+										FT.Interactive.tmpCatArray.push(FT.Interactive.ddMenu[k].urlCode);
 										countDD++
 									}
 								break;	
@@ -682,16 +690,16 @@ $(document).ready(function() {
 						$("#ddList_1 li").unbind();
 						$("#ddList_1 li").bind("click", function() {
 							FT.Interactive.ddFlag = true;
-							var textdd_1 = String($(this).text());
+							//var textdd_1 = String($(this).text());
 							$("#dd_title_1").empty();
-							$("#dd_title_1").append(textdd_1);
-							var chartLabelTxt = textdd_1.substr(0, textdd_1.length-5)
-							$("#chartLabel").empty();
-							$("#chartLabel").append("<b>" + chartLabelTxt + "</b>");
+							$("#dd_title_1").append(String($(this).text()));
+							//var chartLabelTxt = textdd_1.substr(0, textdd_1.length-5)
+							//$("#chartLabel").empty();
+							//$("#chartLabel").append("<b>" + chartLabelTxt + "</b>");
 							FT.Interactive.dataPointer_1 = this.id;
 							// http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=167&y=2012&q=2&filter=
 							// http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=220&id=36&y=2012&q=3&filter=
-							FT.Interactive.dataSource = 'http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=220&id=36&y=2012&q=3&filter=' + FT.interactive.tmpCatArray[FT.interactive.dataPointer_1]
+							FT.Interactive.dataSource = 'http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=220&id=36&y=2012&q=3&filter=' + FT.Interactive.tmpCatArray[FT.Interactive.dataPointer_1]
 							$.getJSON(yqlUrl(FT.Interactive.dataSource), function(ds){}).success(createOptions);
 							
 						});

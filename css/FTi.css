@@ -303,8 +303,49 @@ added by p.feeney 3-dec-2012
 				font-family:Georgia, "Times New Roman", Times, serif;
 				}
 #FTi #tab_1 #container_friendliness_table {width: 862px; height: 260px; position: absolute; top:175px; left: 12px; z-index:600}
-#FTi #tab_1 #container_friendliness {width: 876px; height: 235px; position: absolute; top: 500px; left: 6px; z-index:600}
-#FTi #tab_2 #container_barRisks {width: 876px; height: 550px; position: absolute; top: 180px; left: 6px; z-index:600}
+#FTi #tab_1 #container_friendliness {height: 180px; left: 6px; position: absolute; top: 505px; width: 900px; z-index: 600;}
+#FTi #tab_2 #container_barRisks {width: 876px; height: 450px; position: absolute; top: 180px; left: 6px; z-index:600}
+#container_friendliness_table th  {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	width: 861px;
+	background-color:#e9decf;
+	border-bottom: 2px solid #a7a59b;
+	border-top: 1px solid #a7a59b;
+	height: 25px;
+	text-align:left;
+	font-weight: normal;
+	color: #80807f;
+	margin: 0px;
+	padding: 0px;
+	text-indent: 4px;
+	vertical-align: middle;
+	
+}
+
+#container_friendliness_table th:hover {
+	background-color: #d8cec3;
+	cursor: pointer;
+	margin: 0px;
+	padding: 0px;
+	text-indent: 4px
+}
+
+#container_friendliness_table td {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	border-bottom: 1px solid #a7a59b;
+	height: 24px;
+	text-align:left;
+	color: #80807f;
+	margin: 0px;
+	padding: 0px;
+	text-indent: 4px;	
+}
+
+rowTint {
+  background-color: #f8ebdc;
+}
 .sectionBlurb
 {
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -317,3 +358,11 @@ added by p.feeney 3-dec-2012
 	position:absolute;
 	top: 46px;		
 }
+#blurbTitle { font-size:20px;line-height:18px;font-weight:bold; }
+#blurbText { font-size:13px }
+#chartLabel {position: absolute; top: 133px; left: 14px;  z-index:505}
+#dropDown_0 {position:absolute;top:110px;left:350px;z-index:1020}
+#dropDown_1 {position:absolute;top:128px;left:620px;z-index:1020;display:none;}
+#FTi #dateSelect { position:absolute;top:10px;left:10px;display:inline-block;width:500px; margin-top:6px; }
+#FTi #selectYr { width:240px; float:left; }
+#FTi #selectQtr { width:240px; float:left; }
