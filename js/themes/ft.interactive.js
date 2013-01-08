@@ -62,7 +62,7 @@ Highcharts.theme = {
 			shadow: false
 		},	
 		bar: {
-			borderWidth: 0,
+			borderWidth: 1,
 			borderColor: '#000',
 			shadow: false
 		},

@@ -2,36 +2,114 @@
 script file for Business Barometer - Peter Feeney 30th November 2012
 */
 var FT = FT || {};
-FT.Interactive = FT.Interactive || {};
-FT.Interactive.dataFriendliness = [];
-FT.Interactive.dataThreat = [];
-FT.Interactive.ddArray = [];
-FT.Interactive.ddMenu = [];
-FT.Interactive.globalPieColours = ['#7FB4DB', '#9571A3', '#AE4C77','#7FB4DB', '#9571A3', '#AE4C77','#7FB4DB', '#9571A3', '#AE4C77'];
-FT.Interactive.pieColoursTopical = ['#676547','#89865F','#a6a471','#D1CC90','#ebe7b7','#426781','#598caf','#8ab5cd','#a9cadc','#d6e9f3'];
-FT.Interactive.pieColours = ['#4781aa', '#4A3253', '#660E36','#4781aa', '#4A3253', '#660E36','#4781aa', '#4A3253', '#660E36'];
-FT.Interactive.topicBarColours = ['#4781aa', '#9e2f50', '#A7A59B'];
-FT.Interactive.tmpCatArray = [];			
-FT.Interactive.catsArray = ["By region", 
-						   "By industry", 
-						   "By job title", 
-						   "By turnover", 
-						   "All (1,740)"
-						   ];
-FT.Interactive.catTitles = ["REGION", 
-						   "INDUSTRY", 
-						   "JOB", 
-						   "TURNOVER", 
-						   "ALL"
-						   ];						   
- 
-FT.Interactive.ddFlag = false;
-FT.Interactive.dataPointer_0 = 4;
-FT.Interactive.dataPointer_1 = 0;
-var chart_1,chart_2,chart_3,chart_4,chart_5;
+FT.Interactive = {
+	appBuild: true,
+	
+	dataset: {},
+	globalPieColours: ['#7FB4DB', '#9571A3', '#AE4C77','#7FB4DB', '#9571A3', '#AE4C77','#7FB4DB', '#9571A3', '#AE4C77'],
+	pieColoursTopical: ['#676547','#89865F','#a6a471','#D1CC90','#ebe7b7','#426781','#598caf','#8ab5cd','#a9cadc','#d6e9f3'],
+	pieColours: ['#4781aa', '#4A3253', '#660E36','#4781aa', '#4A3253', '#660E36','#4781aa', '#4A3253', '#660E36'],
+	topicBarColours: ['#4781aa', '#9e2f50', '#A7A59B'],
+	dataSource: 'http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=219&id=36&y=2012&q=3',
+	dataSourceBase: 'http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=219&id=36',
+	dataSourceFilter: 'http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=220&id=36&y=2012&q=3&filter=',
+	wrBlurb: function(pointer){
+		var blurb = FT.Interactive.dataset[FT.Interactive.dataset.cData[0]][FT.Interactive.dataset.cData[1]].all.barometerConfig;
+		$('#blurbTitle').html(blurb.tab[pointer].questionHeading);
+		$('#blurbText').html(blurb.tab[pointer].questionDetail);
+		return true;
+	},
+	yesNoBars: function(chartWidth, firstQ, lastQ, firstText, secondText, container) {
+		//console.log('func:yesNoBars');
+		var topicQ = FT.Interactive.dataset[FT.Interactive.dataset.cData[0]][FT.Interactive.dataset.cData[1]][FT.Interactive.dataset.cData[2]].topicalQuestions.question;
+		var scaleFactor = Number(chartWidth / 100);
+		for (i = firstQ; i < lastQ + 1; i++) {
+			if (container.html() === '') {
+				var o = '';
+				o += '<div class="topicalQuestion">';
+				o += '<div id="yesNo_' + Number(i - 2) + '"><b>' + topicQ[i].qtext + '</b></div>';
+				o += '<div id="no_' + Number(i - 2) + '" class="noBar"></div>';
+				o += '<div id="yes_' + Number(i - 2) + '" class="yesBar"></div>';
+				o += '<div class="answers">';
+				o += '<div style="float:left" id="yesTxt_' + Number(i - 2) + '"></div>';
+				o += '<div style="float:right" id="noTxt_' + Number(i - 2) + '"></div>';
+				o += '</div></div>';
+				container.html(o);
+			}
+			$('#noTxt_' + Number(i - 2)).empty();
+			$('#yesTxt_' + Number(i - 2)).empty();
+			$('#noTxt_' + Number(i - 2)).append(firstText + ': ' + Number(topicQ[i].option[1].content).toFixed(1) + "%");
+			$('#yesTxt_' + Number(i - 2)).append(secondText + ': ' + Number(topicQ[i].option[0].content).toFixed(1) + "%");
+			$('#no_' + Number(i - 2)).stop().animate({
+				width: Number(Math.round(topicQ[i].option[0].content * scaleFactor)) + "px"
+			}, {
+				duration: 1500,
+				easing: 'easeOutExpo'
+			});
+		}
+	},
+	 yesNoMaybeBars: function(chartWidth, firstQ, lastQ, firstText, secondText, thirdText, container) {
+		//console.log('func:yesNoMaybeBars');
+		var topicQ = FT.Interactive.dataset[FT.Interactive.dataset.cData[0]][FT.Interactive.dataset.cData[1]][FT.Interactive.dataset.cData[2]].topicalQuestions.question;
+		var scaleFactor = Number(chartWidth / 100);
+		for (i = firstQ; i < lastQ + 1; i++) {
+			var o = '';
+			o += '<div class="topicalQuestion">';
+			o += '<div id="yesNo_' + Number(i - 2) + '"><b>' + topicQ[i].qtext + '</b></div>';
+			o += '<div id="first_' + Number(i - 2) + '" class="noBar"></div>';
+			o += '<div id="second_' + Number(i - 2) + '" class="sameBar"></div>';
+			o += '<div id="third_' + Number(i - 2) + '" class="yesBar"></div>';
+			o += '<div class="answers">';
+			o += '<div style="float:left; width: 150px;" id="firstTxt_' + Number(i - 2) + '"></div>';
+			o += '<div style="float:left" id="secondTxt_' + Number(i - 2) + '"></div>';
+			o += '<div style="float:right" id="thirdTxt_' + Number(i - 2) + '"></div>';
+			o += '</div></div>';
+			container.append(o);
+			var noDivTest = Number(Math.round(topicQ[i].option[0].content * scaleFactor) + (Math.round(topicQ[i].option[2].content * scaleFactor) / 2) - $('#secondTxt_' + Number(i - 2)).width() / 2)
+			$('#firstTxt_' + Number(i - 2)).empty();
+			$('#secondTxt_' + Number(i - 2)).empty();
+			$('#thirdTxt_' + Number(i - 2)).empty();
+			$('#firstTxt_' + Number(i - 2)).append(firstText + ': ' + Number(topicQ[i].option[0].content).toFixed(1) + "%");
+			$('#secondTxt_' + Number(i - 2)).append(secondText + ': ' + Number(topicQ[i].option[2].content).toFixed(1) + "%");
+			$('#thirdTxt_' + Number(i - 2)).append(thirdText + ': ' + Number(topicQ[i].option[1].content).toFixed(1) + "%");
+			$('#first_' + Number(i - 2)).stop().animate({
+				width: Number(Math.round(topicQ[i].option[0].content * scaleFactor)) + "px"
+			}, {
+				duration: 1500,
+				easing: 'easeOutExpo'
+			});
+			$('#second_' + Number(i - 2)).stop().animate({
+				width: Number(Math.round(topicQ[i].option[2].content * scaleFactor)) + "px"
+			}, {
+				duration: 1500,
+				easing: 'easeOutExpo'
+			});
+			$('#firstTxt_' + Number(i - 2)).stop().animate({
+				width: noDivTest + "px"
+			}, {
+				duration: 1500,
+				easing: 'easeOutExpo'
+			});
+			if (noDivTest < 120) {
+				$('#firstTxt_' + Number(i - 2)).stop();
+				$('#firstTxt_' + Number(i - 2)).css('width', 120 + "px");
+			} else if (noDivTest > 200) {
+				$('#firstTxt_' + Number(i - 2)).stop();
+				$('#firstTxt_' + Number(i - 2)).css({
+					width: 200 + "px"
+				});
+			}
+		}
+	}
+};
+FT.Interactive.topical = {};
+//FT.Interactive.dataFriendliness = [];
+//FT.Interactive.dataThreat = [];
+//FT.Interactive.ddArray = [];
+//FT.Interactive.ddMenu = [];		
+//FT.Interactive.catTitles = ["REGION","INDUSTRY","JOB","TURNOVER","ALL"];						   
 
-// add data source URL here
-FT.Interactive.dataSource = 'http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=219&id=36&y=2012&q=3';
+var  chart_0,chart_1,chart_2,chart_3,chart_4,chart_5;
 
 FT.Interactive.options_0 = {
 	chart: {
@@ -348,363 +426,372 @@ FT.Interactive.options_0 = {
 					enabled: false
 				}
 			};
-function initGraphic(f){
-	//console.log('func:initGraphic');
-	//$(".title").empty().append(f.graphic_title);
-	//$("#source").append("<i>" + f.source + "</i>");
-	//$("#credits").append(" • Edited by " + f.edit_credits + " • Developed by " + f.design_credits);
-	//$(".footer").css( "height", $("#credits").height() +5+"px" );
-	$("#sourcesCredits").html();
-	$("#sourcesCredits").html(f.source + "<br/> " + f.byline);
-	
-};
 
-function yqlUrl(url){
-	//console.log('func:yqlUrl');
-	var rVal = 'http://query.yahooapis.com/v1/public/yql?q=';
-	rVal += encodeURIComponent("select * from xml where url='" + url + "'");
-	rVal += '&format=json&diagnostics=true&callback=?';
-	return rVal;
-};
+
+
 $(document).ready(function() {
-				$("#dropDown_1").css('display', 'none');
-				function ucfirst(str) {
-					var firstLetter = str.slice(0,1);
-					return firstLetter.toUpperCase() + str.substring(1);
-				}
-				$('#dropDown_0').click(function () {
-					$('#ddList_0').slideToggle('fast');
-				});
-				$('#dropDown_1').click(function () {
-					$('#ddList_1').slideToggle('fast');
-				});
-				function wrBlurb(pointer){
-					var blurb = FT.Interactive.dataset.barometerConfig;
-					$('#blurbTitle').html(blurb.tab[pointer].questionHeading);
-					$('#blurbText').html(blurb.tab[pointer].questionDetail);
-				};
-				function wrDateSelector(){
-					
-					for(var i=0; i<yrLen; i++){
-						$('#yrList.ul').append("<li><a href='#' id='" + i +"' >" + dataset[i].year + "</a></li>");
-					}
-					for(var i=0; i<qtrLen; i++){
-						$('#yrList.ul').append("<li><a href='#' id='" + i +"' >" + dataset[i].qtr + "</a></li>");
-					}
-					$('#yrList.ul li a').bind("click", function(event){
-						/*
-							assume if no quarter selected first quarter, 
-							otherwise use the one currently selected unless 
-							that value is not available inthat year
-						*/
-					});
-					$('#qtrList.ul li a').bind("click", function(event){
-					
-					});
-				};
-				function crTabs(){
-					//*************create tabs****************
-					$(FT.Interactive.dataset.barometerConfig.tab)
-						.each( function(k){
-							var tStr = '';
-							if(k==0) {
-								var tStr=' class="current" ';
-								$("#tab_" + k).css('display', 'block');
-							}else{
-								$("#tab_" + k).css('display', 'none');
-							}
-							$('#divNav ul').append("<li><a href='#' " + tStr + "id='" + this.id +"' >" + this.name + "</a></li>");
-						});
-					// functionality which adds the event which change the css on tabs and the blurb text
-					$("#divNav ul li a").bind("click", function(event){ 
-							$("#divNav ul li a").removeClass('current');
-							$(this).addClass('current');
-							wrBlurb(this.id);
-							if(this.id === '3'){
-								
-							}
-							for(var i=0; i < $("#divNav ul li a").length; i++) {
-								i == this.id?$("#tab_" + this.id).css('display', 'block'):$("#tab_" + i).css('display', 'none');
-
-							}
-						});
-				
-				};
-				function crTab_0_Content(){
-				
-					/**********Create global pie charts************/
-					$(FT.Interactive.dataset.standardQuestions.pies.pie)
-					.each( function(i){
-						var _d={
-							name: '',
-							data: [],
-							type:'pie',
-							center:[],
-							};
-						var item;
-						_d.name = $(this).attr('question');
-						_d.center.push([((i+1) * 35) - 20 + "%"])
-						var _n, _v, _c
-						for(item in this.option){	
-								_n = this.option[item].name
-								_v = Number(this.option[item].content); 
-								_d.data.push([_n,_v]);
-						}
-						FT.Interactive.options_0.colors = FT.Interactive.globalPieColours;
-						FT.Interactive.options_0.series.push(_d);
-					})
-					var chart_0 = new Highcharts.Chart(FT.Interactive.options_0);
-				
-				};
-				function crTab_1_Content(){
-					var fTable = FT.Interactive.dataset.standardQuestions.countryFriendliness.country;
-					var fTableStr = '<table id ="friendlyTable" class="tablesorter" cellspacing="0">';
-					for(var i=0; i<fTable.length; i++){
-						if(i==0){
-							fTableStr += '<thead>';
-							fTableStr += '<tr><th class="header">COUNTRY</th><th class="header">VERY FRIENDLY</th><th class="header">FRIENDLY</th><th class="header">NEUTRAL</th><th class="header">UNFRIENDLY</th><th class="header">VERY UNFRIENDLY</th></tr>';
-							fTableStr += '</thead>';
-							fTableStr += '<tbody>';
-						}
-						fTableStr += '<tr>';
-						fTableStr += '<td>' + fTable[i].name + '</td>';
-						for(var j=0; j<5; j++){
-							fTableStr += '<td>' + Number(fTable[i].option[j].content).toFixed(1) + '</td>';
-						}
-						fTableStr += '</tr>';
-					};
-					fTableStr += '</tbody>';
-					fTableStr += '</table>';
-					//console.log('fTable:' + fTableStr);
-					$('#container_friendliness_table').html(fTableStr);
-					$("#friendlyTable")
-					.tablesorter(
-					{	
-						widgets: ['zebra'],
-						sortList:[[1,1]]
-					});
-					
-					var _d0={
-							name: "'Friendly' or 'very friendly' to business'",
-							data: []
-							};
-						var _d1={
-							name: "'Unfriendly' or 'very unfriendly to business'",
-							data: []
-							};
-							var _sFriendly=[];
-					$(FT.Interactive.dataset.standardQuestions.countryFriendliness.country)
-					.each( function(i){
-							_sFriendly.push($(this).attr('name'));
-								
-							_d0.data.push({
-								y: Math.round(Number(this.friendly)),
-							});
-							_d1.data.push({
-								y: Math.round(Number(this.unfriendly)),
-							});
-						});
-					
-					FT.Interactive.categoriesFriendliness = _sFriendly;
-					FT.Interactive.dataFriendliness.push(_d0);
-					FT.Interactive.dataFriendliness.push(_d1);
-					FT.Interactive.options_2.xAxis.categories = FT.Interactive.categoriesFriendliness;
-					FT.Interactive.options_2.title.text = '<br>';
-					FT.Interactive.options_2.subtitle.text = '<b>How businesses see governments</b> (% of respondents)<br><br>';
-					FT.Interactive.options_2.series = FT.Interactive.dataFriendliness;
-					$("#container_friendliness").empty();
-					chart_2 && chart_2.destroy();
-					chart_2 = null;
-					chart_2 = new Highcharts.Chart(FT.Interactive.options_2); 
-				};
-				
-				function crTab_2_Content(){
-				
-					$(FT.Interactive.dataset.standardQuestions.threats)
-					.each( function(i){
-						var _d={
-								name: '',
-								data: []
-								};
-							var _s=[];
-							var item;
-							for(item in this.dataItem){
-								if(item == 'name'){
-									_d.name = this.dataItem[item].name;
-									
-								} else {
-									_s.push(this.dataItem[item].name);
-									_d.data.push({
-										y: Math.round(Number(this.dataItem[item].content)),
-									});
-								}
-							}
-						FT.Interactive.categoriesThreat = _s;
-						FT.Interactive.dataThreat.push(_d);
-					});
-					FT.Interactive.options_3.xAxis.categories = FT.Interactive.categoriesThreat;
-					FT.Interactive.options_3.series = FT.Interactive.dataThreat;
-					$("#container_barRisks").empty();
-					chart_3 && chart_3.destroy();
-					chart_3 = null;
-					chart_3 = new Highcharts.Chart(FT.Interactive.options_3);
-				
-				};
-				$.getJSON(yqlUrl(FT.Interactive.dataSource), function(ds){}).success(createOptions);
-				
-				function createOptions(ds){
-					//console.log('func:createOptions');
-					FT.Interactive.dataset = ds.query.results.dataset;
-					FT.Interactive.ddArray = [];
-					FT.Interactive.dataFriendliness = [];
-					FT.Interactive.dataThreat = [];
-					FT.Interactive.dataCountries = [];
-					//$('#preloader').css('display','none');
-					FT.Interactive.catsArray[(FT.Interactive.catsArray.length-1)] = 'All (' + ds.query.results.dataset.standardQuestions.n + ')';
-					if (FT.Interactive.ddFlag == false) {
-						initGraphic(ds.query.results.dataset.pagefurniture);
-						$("#dd_title_0").empty();
-						$("#dd_title_0").append(FT.Interactive.catsArray[4]);
-						wrBlurb(0);
-						
-						$(FT.Interactive.dataset.filtermenus.item)
-						.each( function(k){
-							FT.Interactive.ddMenu.push({
-								type:$(this).attr('menu'),
-								label:$(this).attr('label'),
-								urlCode:$(this).attr('code'),
-								menuNum:$(this).attr('n')
-							})
-						})
-						
-						
-						crTabs();
-						crTab_0_Content();
-						
-					}
-					/**********End global pie charts************/
-					
-					if (FT.Interactive.ddFlag == true) {
-						/**********Create pie charts************/
-						console.log(':');
-						$(FT.Interactive.dataset.standardQuestions.pies.pie)
-						.each( function(i){
-							var _d={
-								name: '',
-								data: [],
-								type:'pie',
-								center:[],
-								};
-							var item;
-							_d.name = $(this).attr('question');
-							_d.center.push([((i+1) * 35) - 19 + "%"])
-							var _n, _v, _c
-							for(item in this.option){	
-									_n = this.option[item].name
-									_v = Number(this.option[item].content); 
-									_d.data.push([_n,_v]);
-							}
-							FT.Interactive.options_1.colors = FT.Interactive.pieColours;
-							FT.Interactive.options_1.plotOptions.series = {
-								animation: false
-							}
-							FT.Interactive.options_1.series.push(_d);
-						})
-						$("#container_pie").empty();
-						chart_1 && chart_1.destroy();
-						chart_1 = null;
-						chart_1 = new Highcharts.Chart(FT.Interactive.options_1);
-					}
-
-					
-					crTab_1_Content();
-					crTab_2_Content();
-					
-					$("#ddList_0 li").unbind();
-					$("#ddList_0 li").bind("click", function() {
-						
-						var countDD = 0;
-						var text = $(this).text();
-						$("#dd_title_0").empty();
-						$("#dd_title_0").append(text);
-						FT.Interactive.dataPointer_0 = this.id;
-						$("#ddList_1").empty();
-						$("#dropDown_1").css('display', 'block');
-						$("#ddSection").empty();
-						$("#ddSection").append("2. " + FT.Interactive.catTitles[FT.Interactive.dataPointer_0] + " (NO. OF RESPONDENTS)");
-						FT.Interactive.tmpCatArray = [];
-						console.log(':' + this.id);
-						if (FT.Interactive.dataPointer_0 == 4) {
-							$("#dropDown_1").css('display', 'none');
-							$("#container_pie").css('visibility', 'hidden');
-							
-							chart_1 && chart_1.destroy();
-							chart_1 = null;
-							$("#container_pie").empty();
-							$("#container_pie").html('');
-							//http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=166&id=36&y=2012&q=2
-							// http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=219&id=36&y=2012&q=3
-							FT.Interactive.dataSource = 'http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=219&id=36&y=2012&q=3'
-							//console.log(FT.interactive.dataSource)
-							$.getJSON(yqlUrl(FT.Interactive.dataSource), function(ds){}).success(createOptions);
-							$("#chartLabel").empty();
-							$("#chartLabel").append("<b>All respondents</b>");
-						} else{
-							$("#container_pie").css('visibility', 'visible');
-						}
-						for(k=0; k<FT.Interactive.ddMenu.length; k++) {
-							
-							switch(Number(FT.Interactive.dataPointer_0)) {
-								case 0:
-									if(FT.Interactive.ddMenu[k].type == 'region') {
-										$("#ddList_1").append("<li id= "+countDD+"><a>" + FT.Interactive.ddMenu[k].label + "<span style='font-size:11px'><i> (" + FT.Interactive.ddMenu[k].menuNum + ")</i></span></a></li>");
-										FT.Interactive.tmpCatArray.push(FT.Interactive.ddMenu[k].urlCode);
-										countDD++
-									}
-								break;
-								case 1:
-									if(FT.Interactive.ddMenu[k].type == 'sector') {
-										$("#ddList_1").append("<li id= "+countDD+"><a>" + FT.Interactive.ddMenu[k].label + "<span style='font-size:11px'><i> (" + FT.Interactive.ddMenu[k].menuNum + ")</i></span></a></li>");
-										FT.Interactive.tmpCatArray.push(FT.Interactive.ddMenu[k].urlCode);
-										countDD++
-									}
-								break;
-								case 2:
-									if(FT.Interactive.ddMenu[k].type == 'job') {
-										$("#ddList_1").append("<li id= "+countDD+"><a>" + FT.Interactive.ddMenu[k].label + "<span style='font-size:11px'><i> (" + FT.Interactive.ddMenu[k].menuNum + ")</i></span></a></li>");
-										FT.Interactive.tmpCatArray.push(FT.Interactive.ddMenu[k].urlCode);
-										countDD++
-									}
-								break;	
-								case 3:
-									if(FT.Interactive.ddMenu[k].type == 'size') {
-										$("#ddList_1").append("<li id= "+countDD+"><a>" + FT.Interactive.ddMenu[k].label + "<span style='font-size:11px'><i> (" + FT.Interactive.ddMenu[k].menuNum + ")</i></span></a></li>");
-										FT.Interactive.tmpCatArray.push(FT.Interactive.ddMenu[k].urlCode);
-										countDD++
-									}
-								break;	
-							}
-						}
-						$("#dd_title_1").empty();
-						$("#dd_title_1").append("Choose option");
-						$("#ddList_1 li").unbind();
-						$("#ddList_1 li").bind("click", function() {
-							FT.Interactive.ddFlag = true;
-							//var textdd_1 = String($(this).text());
-							$("#dd_title_1").empty();
-							$("#dd_title_1").append(String($(this).text()));
-							//var chartLabelTxt = textdd_1.substr(0, textdd_1.length-5)
-							//$("#chartLabel").empty();
-							//$("#chartLabel").append("<b>" + chartLabelTxt + "</b>");
-							FT.Interactive.dataPointer_1 = this.id;
-							// http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=167&y=2012&q=2&filter=
-							// http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=220&id=36&y=2012&q=3&filter=
-							FT.Interactive.dataSource = 'http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=220&id=36&y=2012&q=3&filter=' + FT.Interactive.tmpCatArray[FT.Interactive.dataPointer_1]
-							$.getJSON(yqlUrl(FT.Interactive.dataSource), function(ds){}).success(createOptions);
-							
-						});
-
-					});
-				}
+	
+	
+	function initGraphic(f){
+		$("#sourcesCredits").html();
+		$("#sourcesCredits").html(f.source + "<br/> " + f.byline);
+		return true;
+	};
+	function yqlUrl(url){
+		//console.log('func:yqlUrl');
+		var rVal = 'http://query.yahooapis.com/v1/public/yql?q=';
+		rVal += encodeURIComponent("select * from xml where url='" + url + "'");
+		rVal += '&format=json&diagnostics=true&callback=?';
+		return rVal;
+	};
+	
+	function wrTab4(ds){
+		var docfrag = document.createDocumentFragment();
+		docfrag.innerHTML = ds.query.results.dataset.content;
+		//$(docfrag).find();
+		
+	};
+	
+	function getSourcesList(){
+		$.getJSON(yqlUrl('http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=233'), function(ds){}).success(wrDateSelector);
+	};
+	
+	function wrDateSelector(ds){
+		FT.Interactive.conf = {sourcesList: ds.query.results.dataset.dateMenu.survey};
+		for(var i=0; i<FT.Interactive.conf.sourcesList.length; i++){
+			var q = FT.Interactive.conf.sourcesList[i];
+			$('#yrList').append('<li data-value="' + q.year + '_' + q.quarter + '"><a href="#">' + q.yearLabel + '&nbsp;' + q.monthLabel +'</a></li>');
+			if(i == 0){
+				//console.log(FT.Interactive.dataset);
+				FT.Interactive.dataset.cData = [q.year, q.quarter, 'all'];
+			}
+		}
+		
+		$('div#selectYr ul#yrList.the_menu li').bind("click", function(event){
+			//console.log('select bis data');
+			$('#selectYrStart').html($('div#selectYr ul#yrList.the_menu li:nth-child(' + ( $(this).index() +1) + ') a ').html());
+			// from here we load the first 'All' dataset
+			var dTmp = $(this).attr("data-value").split('_');
+			loadDataset(dTmp[0], dTmp[1], 'all');
 			
+		});
+		// always get the most current dataset
+		$('#selectYrStart').html($('div#selectYr ul#yrList.the_menu li:nth-child(1) a ').html());
+		loadDataset(FT.Interactive.dataset.cData[0], FT.Interactive.dataset.cData[1], FT.Interactive.dataset.cData[2]);
+	};
+	
+	
+	function crTabs(){
+		//console.log('func:crTabs');
+		$(FT.Interactive.dataset.barometerConfig.tab)
+			.each( function(k){
+				var tStr = '';
+				if(k==0) {
+					var tStr=' class="current" ';
+					$("#tab_" + k).css('display', 'block');
+				}else{
+					$("#tab_" + k).css('display', 'none');
+				}
+				$('#divNav ul').append("<li><a href='#' " + tStr + "id='" + this.id +"' >" + this.name + "</a></li>");
 			});
+		// functionality which adds the event which change the css on tabs and the blurb text
+		$("#divNav ul li a").bind("click", function(event){ 
+			$("#divNav ul li a").removeClass('current');
+			$(this).addClass('current');
+			FT.Interactive.wrBlurb(this.id);
+			if(this.id === '3'){
+				// here's were we load the html for the final tab //*[@id="tab_3"] //*[@id="countryBarsTitle"]
+				/*
+				var fUrl = "http://interactive.ftdata.co.uk/data/ePoint/index.php?";
+				fUrl += 'xPath=' + encodeURIComponent('//*[@id="tab_3"]');
+				fUrl += '&';
+				fUrl += 'url=' + encodeURIComponent('http://interactive.ftdata.co.uk/Barometer_Microsite/ci_' + FT.Interactive.dataset.cData[0] + '_q' + FT.Interactive.dataset.cData[1] + '.html');
+				fUrl += '&';
+				fUrl += 'callback=?';
+				$.getJSON(fUrl,wrTab4);
+				*/
+				$.getScript('http://interactive.ftdata.co.uk/Barometer_Microsite/js/ci_' + FT.Interactive.dataset.cData[0] + '_q' + FT.Interactive.dataset.cData[1] + '.js')
+			}
+			for(var i=0; i < $("#divNav ul li a").length; i++) {
+				i == this.id?$("#tab_" + this.id).css('display', 'block'):$("#tab_" + i).css('display', 'none');
+			}
+		});
+		return true;
+	};
+	function crTab_0_Content(){
+		var FTi = FT.Interactive.dataset[FT.Interactive.dataset.cData[0]][FT.Interactive.dataset.cData[1]]['all'];
+		$(FTi.standardQuestions.pies.pie)
+		.each( function(i){
+			var _d={
+				name: '',
+				data: [],
+				type:'pie',
+				center:[],
+				};
+			var item;
+			_d.name = $(this).attr('question');
+			_d.center.push([((i+1) * 35) - 20 + "%"])
+			var _n, _v, _c
+			for(item in this.option){	
+					_n = this.option[item].name
+					_v = Number(this.option[item].content); 
+					_d.data.push([_n,_v]);
+			}
+			FT.Interactive.options_0.colors = FT.Interactive.globalPieColours;
+			FT.Interactive.options_0.series.push(_d);
+		})
+		chart_0 = new Highcharts.Chart(FT.Interactive.options_0);
+		return true;
+	};
+	function crTab_0_ContentPlus(){
+		var FTi = 	FT.Interactive.dataset[FT.Interactive.dataset.cData[0]][FT.Interactive.dataset.cData[1]][FT.Interactive.dataset.cData[2]];
+		$(FTi.standardQuestions.pies.pie)
+		.each( function(i){
+			var _d={
+				name: '',
+				data: [],
+				type:'pie',
+				center:[],
+				};
+			var item;
+			_d.name = $(this).attr('question');
+			_d.center.push([((i+1) * 35) - 20 + "%"])
+			var _n, _v, _c
+			for(item in this.option){	
+					_n = this.option[item].name
+					_v = Number(this.option[item].content); 
+					_d.data.push([_n,_v]);
+			}
+			FT.Interactive.options_1.colors = FT.Interactive.globalPieColours;
+			FT.Interactive.options_1.series.push(_d);
+		})
+		chart_1 = new Highcharts.Chart(FT.Interactive.options_1);
+		return true;
+	};
+	function crTab_1_Content(){
+		var FTi = 	FT.Interactive.dataset[FT.Interactive.dataset.cData[0]][FT.Interactive.dataset.cData[1]][FT.Interactive.dataset.cData[2]];
+		var fTable = FTi.standardQuestions.countryFriendliness.country;
+		var fTableStr = '<table id ="friendlyTable" class="tablesorter" cellspacing="0">';
+		fTableStr += '<thead>';
+		fTableStr += '<tr>';
+		fTableStr += '<th class="header">COUNTRY</th>';
+		fTableStr += '<th class="header">VERY FRIENDLY</th>';
+		fTableStr += '<th class="header">FRIENDLY</th>';
+		fTableStr += '<th class="header">NEUTRAL</th>';
+		fTableStr += '<th class="header">UNFRIENDLY</th>';
+		fTableStr += '<th class="header">VERY UNFRIENDLY</th>';
+		fTableStr += '</tr>';
+		fTableStr += '</thead>';
+		fTableStr += '<tbody>';
+		
+		for(var i=0; i<fTable.length; i++){
+			fTableStr += '<tr>';
+			fTableStr += '<td>' + fTable[i].name + '</td>';
+			for(var j=0; j<5; j++){
+				fTableStr += '<td>' + Number(fTable[i].option[j].content).toFixed(1) + '</td>';
+			}
+			fTableStr += '</tr>';
+		};
+		
+		fTableStr += '</tbody>';
+		fTableStr += '</table>';
+		$('#container_friendliness_table').html(fTableStr);
+		$("#friendlyTable").tablesorter( {	 widgets: ['zebra'], sortList:[[1,1]] });
+		
+		var _d0={
+				name: "'Friendly' or 'very friendly' to business'",
+				data: []
+			};
+		var _d1={
+				name: "'Unfriendly' or 'very unfriendly to business'",
+				data: []
+			};
+		var _sFriendly=[];
+		$(FTi.standardQuestions.countryFriendliness.country)
+			.each( function(i){
+				_sFriendly.push($(this).attr('name'));
+					
+				_d0.data.push({
+					y: Math.round(Number(this.friendly)),
+				});
+				_d1.data.push({
+					y: Math.round(Number(this.unfriendly)),
+				});
+			});
+			
+		FT.Interactive.options_2.xAxis.categories = _sFriendly;
+		FT.Interactive.options_2.title.text = '<br>';
+		FT.Interactive.options_2.subtitle.text = '<b>How businesses see governments</b> (% of respondents)<br><br>';
+		FT.Interactive.options_2.series = [];
+		FT.Interactive.options_2.series.push(_d0);
+		FT.Interactive.options_2.series.push(_d1);
+		//FT.Interactive.options_2.series = FT.Interactive.dataFriendliness;
+		$("#container_friendliness").empty();
+		chart_2 && chart_2.destroy();
+		chart_2 = null;
+		chart_2 = new Highcharts.Chart(FT.Interactive.options_2);
+		return true; 
+	};
+	
+	function crTab_2_Content(){
+		var FTi = 	FT.Interactive.dataset[FT.Interactive.dataset.cData[0]][FT.Interactive.dataset.cData[1]][FT.Interactive.dataset.cData[2]];
+		//FT.Interactive.dataThreat = [];
+		//FT.Interactive.categoriesThreat = [];
+		FT.Interactive.options_3.xAxis.categories = [];
+		FT.Interactive.options_3.series = [];
+		$(FTi.standardQuestions.threats)
+			.each( function(i){
+				var _d={
+						name: '',
+						data: []
+						};
+				var _s=[];
+				var item;
+				for(item in this.dataItem){
+					if(item == 'name'){
+						_d.name = this.dataItem[item].name;
+						
+					} else {
+						_s.push(this.dataItem[item].name);
+						_d.data.push({
+							y: Math.round(Number(this.dataItem[item].content)),
+						});
+					}
+				}
+				//FT.Interactive.categoriesThreat = _s;
+				FT.Interactive.options_3.xAxis.categories = _s;
+				//FT.Interactive.dataThreat.push(_d);
+				FT.Interactive.options_3.series.push(_d);
+			});
+		//FT.Interactive.options_3.xAxis.categories = FT.Interactive.categoriesThreat;
+		//FT.Interactive.options_3.series = FT.Interactive.dataThreat;
+		$("#container_barRisks").empty();
+		chart_3 && chart_3.destroy();
+		chart_3 = null;
+		chart_3 = new Highcharts.Chart(FT.Interactive.options_3);
+		return true;
+	};
+	
+	
+	
+	function loadDataset(yr, qtr, filter){
+		console.log('yr=' + yr + '|qtr=' + qtr + '|filter=' + filter); 
+		if(FT.Interactive.dataset[yr]){
+			if(FT.Interactive.dataset[yr][qtr]){
+				if(FT.Interactive.dataset[yr][qtr][filter]){
+					//
+				} else {
+					FT.Interactive.dataset[yr][qtr][filter] = {};
+				}
+			} else {
+				FT.Interactive.dataset[yr][qtr] = {};
+				FT.Interactive.dataset[yr][qtr][filter] = {};
+			}
+		} else {
+			FT.Interactive.dataset[yr] = {}
+			FT.Interactive.dataset[yr][qtr] = {};
+			FT.Interactive.dataset[yr][qtr][filter] = {};
+		}
+		FT.Interactive.dataset.cData = [yr, qtr, filter];
+		var tUrl = '';
+		if(filter == 'all'){
+			tUrl = FT.Interactive.dataSourceBase + '&y=' + yr + '&q=' + qtr;
+		} else {
+			tUrl = FT.Interactive.dataSourceFilter + '&y=' + yr + '&q=' + qtr + '&filter=' + filter;
+		}
+		$.getJSON(yqlUrl(tUrl), function(ds){
+			FT.Interactive.dataset[yr][qtr][filter] = ds.query.results.dataset;
+			// closing loop here
+			if(FT.Interactive.appBuild){
+				FT.Interactive.dataset.pagefurniture = ds.query.results.dataset.pagefurniture;
+				FT.Interactive.dataset.barometerConfig = ds.query.results.dataset.barometerConfig;
+				FT.Interactive.dataset.filtermenus = ds.query.results.dataset.filtermenus;
+				FT.Interactive.dataset.standardQuestions = ds.query.results.dataset.standardQuestions;
+				initGraphic(FT.Interactive.dataset.pagefurniture);
+				FT.Interactive.appBuild = false;
+				crTabs();
+				FT.Interactive.wrBlurb(0);
+			} else {
+				// process here after loading the first dataset
+				$("#container_pie").empty();
+				chart_0.destroy();
+				chart_0 = null;
+				FT.Interactive.options_0.series = [];
+				chart_1 && chart_1.destroy();
+				chart_1 = null;
+				FT.Interactive.options_1.series = [];
+				chart_2.destroy();
+				chart_2 = null;
+				FT.Interactive.options_2.series = [];
+				chart_3 && chart_3.destroy();
+				chart_3 = null;
+				FT.Interactive.options_3.series = [];
+			}
+			crTab_0_Content();
+			if(FT.Interactive.dataset.cData[2] != 'all'){ 
+				crTab_0_ContentPlus();
+			} else {
+				$("#dropDown_1").css('display', 'none');
+				$('#ddList_0 li::last-child').html('<a href="#">All (' + ds.query.results.dataset.standardQuestions.n + ')</a>');
+				$('#dd_title_0').html('All (' + ds.query.results.dataset.standardQuestions.n + ')');
+			}
+			crTab_1_Content();
+			crTab_2_Content();
+			createEvents();
+			if(FT.Interactive.topical[yr][qtr][filter]){FT.Interactive.topical[yr][qtr][filter]();}
+		});
+	};
+	
+	function createEvents(){
+		$("#ddList_0 li").bind("click", function() {
+			$("#dd_title_0").empty();
+			$("#dd_title_0").append($(this).text());
+			if(this.id == 4){
+				// hide second drop down
+				$("#dropDown_1").css('display', 'none');
+				chart_1 && chart_1.destroy();
+				chart_1 = null;
+				FT.Interactive.options_1.series = [];
+			} else {
+				var FTi = FT.Interactive.dataset;
+				$("#dd_title_1").html("All");
+				$("#ddList_1").html("");
+				for(var i=0; i< FTi.filtermenus.item.length; i++){
+					if(this.id == 0 && FTi.filtermenus.item[i].menu == 'region'){
+						$("#ddList_1").append("<li id= " + $("#ddList_1 li").length + "><a data-menu='" + FTi.filtermenus.item[i].code + "'>" +  FTi.filtermenus.item[i].label + "<span style='font-size:11px'><i> (" + FTi.filtermenus.item[i].n + ")</i></span></a></li>");
+					} else if(this.id == 1 && FTi.filtermenus.item[i].menu == 'sector'){
+						$("#ddList_1").append("<li id= " + $("#ddList_1 li").length + "><a data-menu='" + FTi.filtermenus.item[i].code + "'>" +  FTi.filtermenus.item[i].label + "<span style='font-size:11px'><i> (" + FTi.filtermenus.item[i].n + ")</i></span></a></li>");
+					} else if(this.id == 2 && FTi.filtermenus.item[i].menu == 'job'){
+						$("#ddList_1").append("<li id= " + $("#ddList_1 li").length + "><a data-menu='" + FTi.filtermenus.item[i].code + "'>" +  FTi.filtermenus.item[i].label + "<span style='font-size:11px'><i> (" + FTi.filtermenus.item[i].n + ")</i></span></a></li>");
+					} else if(this.id == 3 && FTi.filtermenus.item[i].menu == 'size'){
+						$("#ddList_1").append("<li id= " + $("#ddList_1 li").length + "><a data-menu='" + FTi.filtermenus.item[i].code + "'>" +  FTi.filtermenus.item[i].label + "<span style='font-size:11px'><i> (" + FTi.filtermenus.item[i].n + ")</i></span></a></li>");
+					} else {
+						// nothing selected
+					}
+				}
+				$("#dropDown_1").css('display', 'block');
+				$("#ddList_1 li").unbind();
+				$("#ddList_1 li").bind("click", function() {
+					$("#dd_title_1").empty();
+					$("#dd_title_1").append($(this).text());
+					loadDataset(FTi.cData[0],FTi.cData[1],$(this).find('a').attr('data-menu'));
+				});
+			};
+			
+		});
+	};
+
+	getSourcesList();
+	
+	$("#dropDown_1").css('display', 'none');
+	
+	$('#selectYr').click(function () {
+		$('#yrList').slideToggle('fast');
+	});
+	$('#dropDown_0').click(function () {
+		$('#ddList_0').slideToggle('fast');
+	});
+	$('#dropDown_1').click(function () {
+		$('#ddList_1').slideToggle('fast');
+	});
+});
