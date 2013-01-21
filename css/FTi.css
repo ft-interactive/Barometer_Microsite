@@ -98,9 +98,11 @@
 	position: absolute;
 	clip: rect(auto,auto,auto,auto);
 	top: 10px;
+	/*
 	background-image:url(../img/logo.gif);
 	background-repeat:no-repeat;
 	background-position:left;
+	*/
 	
 }
 #FTi .divNav ul  {
@@ -278,8 +280,8 @@ added by p.feeney 3-dec-2012
 #FTi #tab_0 .key {position: absolute; top: 200px; left: 14px;}
 #FTi #tab_0 .key .legend {vertical-align:6px; margin-right: 20px; margin-left: 5px}
 #FTi #tab_0 .pieKey {position: absolute; top: 200px; left: 760px;}
-#FTi #tab_0 #allPies #container_globalPie {width: 866px; height: 330px; position: absolute; top: 300px; left: 14px;  z-index:500; pointer-events:none}
-#FTi #tab_0 #allPies #container_pie {width: 866px; height: 200px; position: absolute; top: 360px; left: 6px; z-index:600}
+#FTi #tab_0 #allPies #container_globalPie {width: 866px; height: 330px; position: absolute; top: 300px; left: 14px;  z-index:500; pointer-events:none; background-color:#fff1e0}
+#FTi #tab_0 #allPies #container_pie {width: 866px; height: 200px; position: absolute; top: 360px; left: 6px; z-index:600; background-color: transparent;}
 #FTi #tab_0 #allPies .questionBox_0 {
 				position: absolute;
 				top: 600px;
