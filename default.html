@@ -2,6 +2,7 @@
 
 <html>
 <head>
+ <meta charset="UTF-8">
 <title></title>
 </head>
 
@@ -41,20 +42,20 @@
                             <li><a id="panel_3" href="javascript:void(0)">Current issues</a></li>
                         </ul>
                     </div>
-                    <div id="pageLogo" style="position:absolute;top:0px;left:0px;">
-                    	<img src="img/logo.gif" style="width:122px;height:60px;">
-                        <span>Barometer</span>
+                    <div id="pageLogo" style="position:absolute;top:0px;left:0px;"> <a href="http://www.ft.com/barometer" target="_self"><img src="img/logo.png" style="width:122px;height:60px;"></a>
+                        <p><span style="margin-left:2px;font-size:8px" >FT/Economist Global Business<br/>
+                            </span><span >Barometer</span></p>
                     </div>
                 </div>
-                <div id="titleBar" class="title"></div>
+                <div id="titleBar" class="title" ></div>
                 <div id="dateSelect">
                     <div unselectable="on" id="selectYr">
-                        <div class="menu_class">
-                            <table width="238" cellspacing="0" cellpadding="5">
+                        <div class="menu_class narrowDD">
+                            <table width="160" cellspacing="0" cellpadding="0">
                                 <tbody>
                                     <tr>
-                                        <td bgcolor="#FFFFFF" id="selectYrStart">Year</td>
-                                        <td width="20px" bgcolor="#4781AA" align="center"><img src="img/arrow.png"></td>
+                                        <td id="selectYrStart">Year</td>
+                                        <td class="ddArrowUp" align="center"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -69,12 +70,12 @@
                 </div>
                 <div id="chartLabel"> <b>All respondents</b> </div>
                 <div unselectable="on" id="dropDown_0"> 1. CATEGORY
-                    <div class="menu_class">
-                        <table width="238" cellspacing="0" cellpadding="5">
+                    <div class="menu_class wideDD">
+                        <table width="238" cellspacing="0" cellpadding="0">
                             <tbody>
                                 <tr>
-                                    <td bgcolor="#FFFFFF" id="dd_title_0">All</td>
-                                    <td width="20px" bgcolor="#4781AA" align="center"><img src="img/arrow.png"></td>
+                                    <td id="dd_title_0">All</td>
+                                    <td class="ddArrowUp" align="center"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -88,12 +89,13 @@
                     </ul>
                 </div>
                 <div unselectable="on" id="dropDown_1" style="display: none;">
-                    <div class="menu_class">
-                        <table width="238" cellspacing="0" cellpadding="5">
+                    <div id="ddSection"></div>
+                    <div class="menu_class wideDD">
+                        <table width="238" cellspacing="0" cellpadding="0">
                             <tbody>
                                 <tr>
-                                    <td bgcolor="#FFFFFF" id="dd_title_1">All</td>
-                                    <td width="20px" bgcolor="#4781AA" align="center"><img src="img/arrow.png"></td>
+                                    <td id="dd_title_1">All</td>
+                                    <td class="ddArrowUp" align="center"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -110,17 +112,9 @@
                         <div id="allPies">
                             <div id="container_globalPie"></div>
                             <div id="container_pie"></div>
-                            <div class="questionBox_0">
-                            	<span style="font-size:13px">
-                                	<b>What are your expectations for</b>
-                                </span>
-                                <br>
-                                <span style="font-size:26px">Your company</span>
-                                <br>
-                                <span style="font-size:13px">
-                                	<b>Over the next six months?</b>
-                                </span>
-                            </div>
+                            <div class="questionBox_0"> <span style="font-size:13px"> <b>What are your expectations for</b> </span> <br>
+                                <span style="font-size:26px">Your company</span> <br>
+                                <span style="font-size:13px"> <b>Over the next six months?</b> </span> </div>
                             <div class="questionBox_1"> <span style="font-size:13px"><b>What are your expectations for</b></span><br>
                                 <span style="font-size:26px">Your industry</span><br>
                                 <span style="font-size:13px"><b>Over the next six months?</b></span> </div>
@@ -129,7 +123,7 @@
                                 <span style="font-size:13px"><b>Over the next six months?</b></span> </div>
                         </div>
                     </div>
-                    <div id="tab_1">
+                    <div id="tab_1" style="display:none">
                         <div id="container_friendliness_table">
                             <table cellspacing="0" class="tablesorter" id="friendlyTable">
                                 <thead>
@@ -157,18 +151,18 @@
                 </div>
             </div>
             <!-- FTi sandbox end -->
-            
+            <div id="social-button">
+            	<img src="img/shareIcons.svg" usemap="#sharemap">
+                <map name="sharemap" id="sharemap">
+                	<area shape="rect" coords="60,0,83,126" href="#" alt="facebook">
+                    <area shape="rect" coords="86,0,108,126" href="#" alt="twitter">
+                    <area shape="rect" coords="110,0,134,126" href="#" alt="linkedin">
+                    <area shape="rect" coords="136,0,163,126" href="#" alt="google+">
+                </map>
+            </div>
             <div class="footer">
-                <div id="source">
-                	<strong>Source:</strong>
-                    <a href="http://www.eiu.com" target="_blank">Economist Intelligence Unit</a>
-                    <br>Interactive graphic by
-                    <a href="http://search.ft.com/search?queryText=%22Steve%20Bernard%22" target="_blank">Steve Bernard</a>
-                    ,&nbsp;
-                    <a href="http://search.ft.com/search?queryText=%22Peter%20Feeney%22" target="_blank">Peter Feeney</a>
-                    ,&nbsp;and
-                    <a href="http://blogs.ft.com/ftdata/author/martinstabe/" target="_blank">Martin Stabe</a>
-                </div>
+                <div id="source"> <strong>Source:</strong> <a href="http://www.eiu.com" target="_blank">Economist Intelligence Unit</a> <br>
+                    Interactive graphic by <a href="http://search.ft.com/search?queryText=%22Steve%20Bernard%22" target="_blank">Steve Bernard</a> ,&nbsp; <a href="http://search.ft.com/search?queryText=%22Peter%20Feeney%22" target="_blank">Peter Feeney</a> ,&nbsp;and <a href="http://blogs.ft.com/ftdata/author/martinstabe/" target="_blank">Martin Stabe</a> </div>
             </div>
         </div>
         <!-- custom interactive end --> 

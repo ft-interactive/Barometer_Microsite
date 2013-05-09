@@ -8,8 +8,12 @@ FT.Interactive = {
 	dataset: {
 		cData:[]
 	},
+	tPointer:0,
 	globalPieColours: ['#7FB4DB', '#9571A3', '#AE4C77','#7FB4DB', '#9571A3', '#AE4C77','#7FB4DB', '#9571A3', '#AE4C77'],
-	pieColoursTopical: ['#676547','#89865F','#a6a471','#D1CC90','#ebe7b7','#426781','#598caf','#8ab5cd','#a9cadc','#d6e9f3'],
+	pieColoursTopical: [],
+	pieColoursTopicalFirst:["#7c0d00", "#a22519","#b1493f","#c36256","#d17c70","#df9c92","#ebbcb3","#ffe6dd"],
+	pieColoursTopicalSecond:["#004e77", "#276997","#598caf","#75a5c2","#8ab5cd","#a9cadc","#bcd7e5","#e1eff8"],
+	pieColoursTopicalThird:["#4e4c00","#655f23","#848243","#a19e68","#b9b886","#d0cfb1","#e1e1cd","#f2f2e9"],
 	pieColours: ['#4781aa', '#4A3253', '#660E36','#4781aa', '#4A3253', '#660E36','#4781aa', '#4A3253', '#660E36'],
 	topicBarColours: ['#4781aa', '#9e2f50', '#A7A59B'],
 	dataSource: 'http://interactive.ftdata.co.uk/data/ft.interactive.data_v2.php?_cf=219&id=36&y=2012&q=3',
@@ -27,33 +31,32 @@ FT.Interactive = {
 	},
 	wrBlurb: function(pointer){
 		var blurb = FT.Interactive.dataset[FT.Interactive.dataset.cData[0]][FT.Interactive.dataset.cData[1]].all.barometerConfig;
+		
+		//console.log(blurb.tab[pointer].questionDetail);
 		$('#blurbTitle').html(blurb.tab[pointer].questionHeading);
 		$('#blurbText').html(blurb.tab[pointer].questionDetail);
 		return true;
 	},
 	yesNoBars: function(chartWidth, firstQ, lastQ, firstText, secondText, container) {
-		//console.log('func:yesNoBars');
 		var topicQ = FT.Interactive.dataset[FT.Interactive.dataset.cData[0]][FT.Interactive.dataset.cData[1]][FT.Interactive.dataset.cData[2]].topicalQuestions.question;
 		var scaleFactor = Number(chartWidth / 100);
 		for (i = firstQ; i < lastQ + 1; i++) {
-			if (container.html() === '') {
-				var o = '';
-				o += '<div class="topicalQuestion">';
-				o += '<div id="yesNo_' + Number(i - 2) + '"><b>' + topicQ[i].qtext + '</b></div>';
-				o += '<div id="no_' + Number(i - 2) + '" class="noBar"></div>';
-				o += '<div id="yes_' + Number(i - 2) + '" class="yesBar"></div>';
-				o += '<div class="answers">';
-				o += '<div style="float:left" id="yesTxt_' + Number(i - 2) + '"></div>';
-				o += '<div style="float:right" id="noTxt_' + Number(i - 2) + '"></div>';
-				o += '</div></div>';
-				container.html(o);
-			}
+			var o = '';
+			o += '<div class="topicalQuestion">';
+			o += '<div id="yesNo_' + Number(i - 2) + '"><b>' + topicQ[i].qtext + '</b></div>';
+			o += '<div id="no_' + Number(i - 2) + '" class="noBar"></div>';
+			o += '<div id="yes_' + Number(i - 2) + '" class="yesBar"></div>';
+			o += '<div class="answers">';
+			o += '<div style="float:left" id="yesTxt_' + Number(i - 2) + '"></div>';
+			o += '<div style="float:right" id="noTxt_' + Number(i - 2) + '"></div>';
+			o += '</div></div>';
+			container.append(o);
 			$('#noTxt_' + Number(i - 2)).empty();
 			$('#yesTxt_' + Number(i - 2)).empty();
 			$('#noTxt_' + Number(i - 2)).append(firstText + ': ' + Number(topicQ[i].option[1].content).toFixed(1) + "%");
 			$('#yesTxt_' + Number(i - 2)).append(secondText + ': ' + Number(topicQ[i].option[0].content).toFixed(1) + "%");
 			$('#no_' + Number(i - 2)).stop().animate({
-				width: Number(Math.round(topicQ[i].option[0].content * scaleFactor)) + "px"
+				width: Number(Math.round(topicQ[i].option[0].content)) + "%"
 			}, {
 				duration: 1500,
 				easing: 'easeOutExpo'
@@ -77,7 +80,8 @@ FT.Interactive = {
 			o += '<div style="float:right" id="thirdTxt_' + Number(i - 2) + '"></div>';
 			o += '</div></div>';
 			container.append(o);
-			var noDivTest = Number(Math.round(topicQ[i].option[0].content * scaleFactor) + (Math.round(topicQ[i].option[2].content * scaleFactor) / 2) - $('#secondTxt_' + Number(i - 2)).width() / 2)
+			var noDivTest = Number(Math.round(topicQ[i].option[0].content * scaleFactor) + (Math.round(topicQ[i].option[2].content * scaleFactor) / 2) - $('.sameBar').width());
+			//console.log($('.sameBar').width())
 			$('#firstTxt_' + Number(i - 2)).empty();
 			$('#secondTxt_' + Number(i - 2)).empty();
 			$('#thirdTxt_' + Number(i - 2)).empty();
@@ -85,13 +89,13 @@ FT.Interactive = {
 			$('#secondTxt_' + Number(i - 2)).append(secondText + ': ' + Number(topicQ[i].option[2].content).toFixed(1) + "%");
 			$('#thirdTxt_' + Number(i - 2)).append(thirdText + ': ' + Number(topicQ[i].option[1].content).toFixed(1) + "%");
 			$('#first_' + Number(i - 2)).stop().animate({
-				width: Number(Math.round(topicQ[i].option[0].content * scaleFactor)) + "px"
+				width: Number(Math.round(topicQ[i].option[0].content)) + "%"
 			}, {
 				duration: 1500,
 				easing: 'easeOutExpo'
 			});
 			$('#second_' + Number(i - 2)).stop().animate({
-				width: Number(Math.round(topicQ[i].option[2].content * scaleFactor)) + "px"
+				width: Number(Math.round(topicQ[i].option[2].content)) + "%"
 			}, {
 				duration: 1500,
 				easing: 'easeOutExpo'
@@ -102,13 +106,13 @@ FT.Interactive = {
 				duration: 1500,
 				easing: 'easeOutExpo'
 			});
-			if (noDivTest < 120) {
+			if (noDivTest < 80) {
 				$('#firstTxt_' + Number(i - 2)).stop();
-				$('#firstTxt_' + Number(i - 2)).css('width', 120 + "px");
-			} else if (noDivTest > 200) {
+				$('#firstTxt_' + Number(i - 2)).css('width', 80 + "px");
+			} else if (noDivTest > Number(chartWidth-80)) {
 				$('#firstTxt_' + Number(i - 2)).stop();
 				$('#firstTxt_' + Number(i - 2)).css({
-					width: 200 + "px"
+					width: Number(chartWidth-160) + "px"
 				});
 			}
 		}
@@ -119,12 +123,13 @@ FT.Interactive = {
 			$('#tab_3').html(html);
 		},
 		pageData: function(){
+			//console.log('func:pageData');
 			var infoArr = FT.Interactive.topical.dataSources
 			FT.Interactive.chkDataObj(FT.Interactive.dataset,0,[FT.Interactive.dataset.cData[0], FT.Interactive.dataset.cData[1], FT.Interactive.dataset.cData[2], 'topicalQuestions']);
 			if(FT.Interactive.dataset.cData[2] === 'all'){
 				$.getJSON(yqlUrl(infoArr[0]), pageBuild);
 			} else {
-				$.getJSON(yqlUrl(infoArr[1] + FT.Interactive.dataset.cData[2]),  pageReBuild);
+				$.getJSON(yqlUrl(infoArr[1] + FT.Interactive.dataset.cData[2]),function(ds){}).success(pageReBuild);
 			}
 		}
 	}
@@ -214,7 +219,7 @@ FT.Interactive.options_2 = {
 		renderTo: 'container_friendliness',
 		defaultSeriesType: 'column',
 		height:175,
-		width:900
+		width:970
 	},
 	title: {
 		text: ''
@@ -287,7 +292,7 @@ FT.Interactive.options_3 = {
 	chart: {
 		renderTo: 'container_barRisks',
 		defaultSeriesType: 'bar',
-		 width: 900,
+		 width: 960,
 		 height:500
 	},
 	title: {
@@ -336,7 +341,7 @@ FT.Interactive.options_3 = {
 		enabled: false
 	}
 };
-FT.Interactive.options_4 = {
+FT.Interactive.options_4single = {
 	chart: {
 		defaultSeriesType: 'pie',
 		plotBackgroundColor: null,
@@ -344,6 +349,81 @@ FT.Interactive.options_4 = {
 		plotBorderWidth: null,
 		plotShadow: false,
 		renderTo:'container_pieTopical',
+		spacingLeft: 75
+	},
+	title: {
+		text: ''
+	},
+	credits: {
+		enabled:false
+	},
+	tooltip: {
+		formatter: function () {
+			return '<b>' + this.point.name + '</b>: ' + Math.round(this.y * 10)/10 + '%';
+		}
+	},
+	plotOptions: {
+		pie: {
+			borderWidth:2,
+			allowPointSelect: false,
+			shadow:false,
+			cursor: 'pointer',
+			dataLabels: {
+				enabled: false,
+			}
+		}
+	},
+	legend: {
+		enabled: false
+	},
+	series: []
+};
+FT.Interactive.options_4double = {
+	chart: {
+		defaultSeriesType: 'pie',
+		plotBackgroundColor: null,
+		backgroundColor: null,
+		plotBorderWidth: null,
+		plotShadow: false,
+		renderTo:'container_pieTopical',
+		spacingLeft: 75
+	},
+	title: {
+		text: ''
+	},
+	credits: {
+		enabled:false
+	},
+	tooltip: {
+		formatter: function () {
+			return '<b>' + this.point.name + '</b>: ' + Math.round(this.y * 10)/10 + '%';
+		}
+	},
+	plotOptions: {
+		pie: {
+			borderWidth:2,
+			allowPointSelect: false,
+			shadow:false,
+			cursor: 'pointer',
+			dataLabels: {
+				enabled: false,
+			}
+		}
+	},
+	legend: {
+		enabled: false
+	},
+	series: []
+};
+FT.Interactive.options_4triple = {
+	chart: {
+		defaultSeriesType: 'pie',
+		plotBackgroundColor: null,
+		backgroundColor: null,
+		plotBorderWidth: null,
+		plotShadow: false,
+		renderTo:'container_pieTopical',
+		spacingLeft: 75
 	},
 	title: {
 		text: ''
@@ -446,8 +526,84 @@ FT.Interactive.options_5 = {
 		enabled: false
 	}
 };
+// chart for 2012_q2
+FT.Interactive.options_6 = {
+	colors:['#b1493f','#89865F','#598caf',"#ccc"],
+	chart: {
+		renderTo: 'container_countryBars',
+		defaultSeriesType: 'column',
+	},
+	title: {
+		text: ' ',
+		margin:40 
+	},
+	tooltip: {
+		formatter: function () {
+			return '<b>' + this.x + '</b>: ' + this.y  + '%';
+		}
+	},
+	xAxis: {
+		categories: [],
+		tickPosition: 'outside',
+			labels: {
+			rotation: -45,
+			align: 'right',
+			style: {
+				fontSize: '13px',
+				fontFamily: 'Verdana, sans-serif'
+			}
+		}
+		
+	},
+	
+	credits: {
+		enabled:false
+	},
+	
+	yAxis: {
+		min:0,
+		max:100,
+		labels: {
+			align: 'center',
+			x: 0,
+			y: 12
+		},
+		tickInterval: 20,
+		title: {
+			text:'Percentage %'	,
+			y:0,
+			x:-5
+		}
+	},
+	plotOptions: {
+		 series: {
+			stacking: 'normal',
+			pointPadding: -0.128,
+			groupPadding: 0.2,
+		 }
+	},
+	legend: {
+		enabled:true,
+		x:110,
+		y:16,
+		itemStyle: {
+			color: '#333',
+			font: '11px Arial, Helvetica, sans-serif',
+		},
+		enabled:true,
+		layout: 'horizontal',
+		borderWidth: 0,
+		backgroundColor: '#fff1e0'
+	},
+						
+	series: [],
+	exporting: {
+		enabled: false
+	}
+};
+
 			//
-function getPieDataSeries(dataset){
+function getPieDataSeries(dataset, flag){
 	var series = [];
 	$(dataset)
 	.each( function(i){
@@ -459,7 +615,13 @@ function getPieDataSeries(dataset){
 			};
 		var item;
 		_d.name = $(this).attr('question');
-		_d.center.push([((i+1) * 35) - 20 + "%"])
+		if(flag){
+			// small
+			_d.center.push([((i+1) * 35) - 19 + "%"]);
+		} else {
+			//large
+			_d.center.push([((i+1) * 35) - 20 + "%"]);
+		}
 		var _n, _v, _c
 		for(item in this.option){	
 				_n = this.option[item].name

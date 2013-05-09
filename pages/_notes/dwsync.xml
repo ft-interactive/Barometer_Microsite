@@ -7,7 +7,12 @@
 <file name="ci_2011_q3.js" server="interactive.ftdata.co.uk" local="130032370420000000" remote="130032388670000000" Dst="1" />
 <file name="ci_2011_q2.js" server="interactive.ftdata.co.uk" local="130032370420000000" remote="130032388670000000" Dst="1" />
 <file name="ci_2011_q1.js" server="interactive.ftdata.co.uk" local="130032370420000000" remote="130032388670000000" Dst="1" />
-<file name="ci_2012_q3.js" server="92.48.79.66" local="130034274087964874" remote="130034285170000000" Dst="1" />
-<file name="ci_2012_q2.js" server="92.48.79.66" local="130034272195444874" remote="130034272230000000" Dst="1" />
-<file name="ci_2012_q1.js" server="92.48.79.66" local="130034285026774874" remote="130034285070000000" Dst="1" />
+<file name="ci_2012_q3.js" server="92.48.79.66" local="130059225632932295" remote="130059225660000000" Dst="1" />
+<file name="ci_2012_q2.js" server="92.48.79.66" local="130059225350460245" remote="130059225380000000" Dst="1" />
+<file name="ci_2012_q1.js" server="92.48.79.66" local="130059225743126120" remote="130059225770000000" Dst="1" />
+<file name="ci_2011_q1.js" server="92.48.79.66" local="130059224641955945" remote="130059224690000000" Dst="1" />
+<file name="ci_2011_q4.js" server="92.48.79.66" local="130059224986831595" remote="130059225010000000" Dst="1" />
+<file name="ci_2011_q2.js" server="92.48.79.66" local="130059224800109570" remote="130059224820000000" Dst="1" />
+<file name="ci_2011_q3.js" server="92.48.79.66" local="130059224898971795" remote="130059224920000000" Dst="1" />
+<file name="ci_2012_q4.js" server="92.48.79.66" local="130059225529511495" remote="130059225550000000" Dst="1" />
 </dwsync>

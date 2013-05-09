@@ -2,9 +2,11 @@
 require('php/phpQuery-onefile.php');
 
 // first get our thir party wrapper page
-$rUrl = "http://www.ft.com/thirdpartywarpper/businessbarometer";
-
+//$rUrl = "http://www.ft.com/thirdpartywarpper/businessbarometer";
+$rUrl = "http://www.ft.com/thirdpartywrapper/businessBarometer";
+$rPageInfo;
 function rdContent($rUrl){
+	global $rPageInfo;
 	$ch = curl_init($rUrl);
 	$options = array(
 		CURLOPT_HEADER => false,
@@ -12,10 +14,13 @@ function rdContent($rUrl){
 		CURLOPT_HTTPHEADER => array('Access-Control-Allow-Origin: *','Content-type: text/javascript;charset=utf-8')
 		);
 	curl_setopt_array( $ch, $options );
-    return curl_exec($ch);
+	$o = curl_exec($ch);
+	$rPageInfo = curl_getinfo($ch);
+    return $o;
 };
 
 $rDoc = rdContent($rUrl);
+//echo $rDoc;
 $wrapper = phpQuery::newDocumentHTML($rDoc);
 phpQuery::selectDocument($wrapper);
 /*
@@ -34,5 +39,13 @@ phpQuery::selectDocument($doc);
 $innerHTML = pq('div#igabcde-012345-098765-fedcba')->html();
 phpQuery::selectDocument($wrapper);
 pq('div.freestyle > div#igabcde-012345-098765-fedcba')->html($innerHTML);
+header("Cache-Control: max-age=86400");
+/*
+crc gives a negative value in php5 if on a 32bit system, could our VM be 32bit or 64bit
+VmWare are advising to use 32bit system for simple web services, so we could get caught out
+MD5 always returns a positive number.
+*/
+$eTag = md5($wrapper);
+header('ETag: "' . $eTag .'"');
 print $wrapper;
 ?>

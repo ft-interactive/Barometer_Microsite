@@ -4,5 +4,7 @@
 <file name="asc.gif" server="interactive.ftdata.co.uk" local="129992786900000000" remote="129992786900000000" Dst="1" />
 <file name="desc.gif" server="interactive.ftdata.co.uk" local="130032370060000000" remote="130032370060000000" Dst="1" />
 <file name="bg.gif" server="interactive.ftdata.co.uk" local="129992786900000000" remote="129992786900000000" Dst="1" />
-<file name="FTi.css" server="92.48.79.66" local="130032370060000000" remote="130032370060000000" Dst="1" />
+<file name="FTi.css" server="92.48.79.66" local="130039294685110499" remote="130039294740000000" Dst="1" />
+<file name="master.css" server="ftlnx109-lviw-uk-p//opt/customer/apps/interactive.ftdata.co.uk/var/www/html/" local="129985734970000000" remote="129985734970000000" Dst="2" />
+<file name="FTi.css" server="ftlnx109-lviw-uk-p//opt/customer/apps/interactive.ftdata.co.uk/var/www/html/" local="130058244540000000" remote="130058244540000000" Dst="2" />
 </dwsync>

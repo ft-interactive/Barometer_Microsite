@@ -1,3 +1,18 @@
+@font-face{
+    font-family: "BentonSans";
+    src: url("http://s1.ft-static.com/m/font/e9d47971-b7d8-4663-8c9b-3a0b425e981f-2.eot");
+    src: url("http://s1.ft-static.com/m/font/e9d47971-b7d8-4663-8c9b-3a0b425e981f-2.eot?#iefix") format("embedded-opentype"), url("http://s1.ft-static.com/m/font/e9d47971-b7d8-4663-8c9b-3a0b425e981f-3.woff") format("woff");
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face{
+    font-family: "BentonSans";
+    src: url("http://s1.ft-static.com/m/font/76e393a7-edbd-4283-91db-93b1a40fe465-2.eot");
+    src: url("http://s1.ft-static.com/m/font/76e393a7-edbd-4283-91db-93b1a40fe465-2.eot?#iefix") format("embedded-opentype"), url("http://s1.ft-static.com/m/font/76e393a7-edbd-4283-91db-93b1a40fe465-3.woff") format("woff");
+    font-style: normal;
+    font-weight: bold;
+}
 #FTi{}
 #FTi .wideWidth { width:972px; position: relative; left:0px; top:0px;}
 #FTi .narrowWidth { width:600px; position: relative; left:0px; top:0px;}
@@ -13,8 +28,9 @@
 
 #FTi .wideWidth .title {
 	padding-top:2px;
-	background-color:#fff1e0;
+	background-color:#e9decf;
 	border-top: 2px solid #a7a59b;
+	height:80px;
 }
 
 #FTi .content{
@@ -24,7 +40,7 @@
 	overflow:hidden;
 	z-index:200;
 	font-size:14px;
-	color:#74736c;
+	color:#43423e;
 }
 #FTi .narrowWidth .loader{
 	position:absolute;
@@ -48,7 +64,7 @@
 }
 
 #FTi .narrowWidth #preLoader div p {
-	font-family:Arial, Helvetica, sans-serif;
+	font-family:BentonSans, BentonSans, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	position: relative;
 	top: 180px;
@@ -57,7 +73,7 @@
 }
 
 #FTi .footer {
-	font-family:Arial, Helvetica, sans-serif;
+	font-family:BentonSans, Arial, Helvetica, sans-serif;
 	font-size:11px;
 	color: #2e6e9e;
 	left: 0px;
@@ -72,11 +88,13 @@
 
 #FTi #source{
 	text-decoration:none;
-	font-family:Arial, Helvetica, sans-serif;
+	font-family:BentonSans, Arial, Helvetica, sans-serif;
 	font-size:11px;
 	color:#a7a59b;	
 	line-height:16px;
-}#FTi .divLinks {
+}
+
+#FTi .divLinks {
 	background-color: #fff1e0;
 	float: right;
 	padding-top: 0px;
@@ -92,7 +110,9 @@
 	height: 30px;
 	margin:0;
 	float: right;
-	font-family: Georgia, "Times New Roman", Times, serif;
+	font-family: BentonSans, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight:bold;
 	right: 1px;
 	padding: -29px;
 	position: absolute;
@@ -118,9 +138,7 @@
 	height: 40px;
 	line-height: 25px;
 	background-color: #a7a59b;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #514d44;
+	color: #fff;
 	text-align:center;
 	text-decoration:none;
 	margin: 0px;
@@ -134,21 +152,24 @@
 	background-position: left top;
 	
 	/*Gradients*/
-	background-color: #cec6b9;
-	border: 1px solid #bbb4a8;
+	border-right: 1px solid #e9decf;
 	padding: 0px 8px 0px 8px;
  
 }
 
+#FTi .divNav ul li:last-child a  {
+	border:none;	
+}
+
 #FTi .divNav ul li a:hover  {
-	background-color:#a7a59b;
-	color: #FFF;
+	background-color:#74736c;
+	color: #fff;
 }
 
 #FTi .divNav ul li a:active {
-	color: #FFF;
+	color: #fff;
 	background-color: #4781aa;
-	border: 1px solid #40759a;
+	border-right: 1px solid #e9decf;
 	cursor: default;
 }
 
@@ -156,12 +177,21 @@
 
 #FTi .divNav ul li a.current, .divNav ul li a.current:hover  {
 	background-color:#4781aa;
-	color:#FFFFFF;
+	color:#fff;
 	cursor:default;
-	border: 1px solid #40759a;
 }
 	
-	  
+#FTi #pageLogo p{
+	margin-left: 130px;
+	margin-top: -58px;
+	color: #12a89d;
+	font-family: BentonSans, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size: 22px;
+	text-transform:uppercase;
+	line-height:14px;
+}
+
 #FTi #button {
 	height: 32px;
 	width: 230px;
@@ -177,27 +207,59 @@ ul, li {
 }
 
 .menu_class {
-	border:1px solid #4781aa;
+	font-weight:bold;
+	border-radius:3px;
+	font-size:12px;
+	color:#fff;
+	padding:0px 0px 0px 6px;
+	background-color:#a7a59b;
+	height:24px;
 	cursor:pointer;
+}
+
+.menu_class.narrowDD{
+	width:160px;	
+}
+
+.menu_class.wideDD{
+	width:238px;	
+}
+
+#FTi .ddArrowUp{
+	width:18px;
+	height:24px;
+	background-color:#a7a59b;
+	background:url(../_media/ddArrowWhite.png) no-repeat;
 }
 
 .the_menu {
 	display:none;
-	width:226px;
-	border-width: 1px 2px 2px 2px;
-	border-color: #4781aa;
-	border-style:solid;
+	border-radius:0px 0px 3px 3px;
+	border:2px solid #a7a59b;
+	margin-top:-2px;
+}
+
+#FTi #yrList {
+	width:162px;
+}
+
+#FTi #ddList_0 {
+	width:240px;
+}
+
+#FTi #ddList_1 {
+	width:240px;
 }
 
 .the_menu li {
 	background-color: #fff;
-	border-bottom: solid 1px #ccc;
+	border-bottom: solid 1px #dfded7;
 }
 
 .the_menu li a {
-	font-family:Arial, Helvetica, sans-serif;
+	font-family:BentonSans, Arial, Helvetica, sans-serif;
 	font-size:12px;
-	color:#333; 
+	color:#43423e; 
 	text-decoration:none; 
 	padding:5px; 
 	display:block;
@@ -206,11 +268,11 @@ ul, li {
 .the_menu li a:hover {
 	padding:5px;
 	font-weight:reg;
-	background-color:#eee;
+	background-color:#f6e9d8;
 }
 
 td {
-	font-family:Arial, Helvetica, sans-serif;
+	font-family:BentonSans, Arial, Helvetica, sans-serif;
 	font-size:12px;
 	
 }
@@ -260,7 +322,7 @@ td {
 .toolTip
 {
 	background-color: #fff;
-	font-family:Arial, Helvetica, sans-serif;
+	font-family:BentonSans, Arial, Helvetica, sans-serif;
 	font-size:12px;
 	padding:5px;
 	position: absolute;
@@ -279,13 +341,13 @@ added by p.feeney 3-dec-2012
 */
 #FTi #tab_0 .key {position: absolute; top: 200px; left: 14px;}
 #FTi #tab_0 .key .legend {vertical-align:6px; margin-right: 20px; margin-left: 5px}
-#FTi #tab_0 .pieKey {position: absolute; top: 200px; left: 760px;}
-#FTi #tab_0 #allPies #container_globalPie {width: 866px; height: 330px; position: absolute; top: 300px; left: 14px;  z-index:500; pointer-events:none; background-color:#fff1e0}
-#FTi #tab_0 #allPies #container_pie {width: 866px; height: 200px; position: absolute; top: 360px; left: 6px; z-index:600; background-color: transparent;}
+#FTi #tab_0 .pieKey {position: absolute; top: 200px; left: 766px;}
+#FTi #tab_0 #allPies #container_globalPie {width: 972px; height: 330px; position: absolute; top: 300px; z-index:500; pointer-events:none; background-color:#fff1e0}
+#FTi #tab_0 #allPies #container_pie {width: 972px; height: 200px; position: absolute; top: 360px; left: -9px; z-index:600; background-color: transparent;}
 #FTi #tab_0 #allPies .questionBox_0 {
 				position: absolute;
-				top: 600px;
-				left: 40px
+				top: 590px;
+				left: 42px;
 				text-align: center;
 				color:#333;
 				z-index:610;
@@ -294,8 +356,8 @@ added by p.feeney 3-dec-2012
 				}
 #FTi #tab_0 #allPies .questionBox_1 {
 				position: absolute;
-				top: 600px;
-				left: 330px;
+				top: 590px;
+				left: 372px;
 				text-align: center;
 				color:#333;
 				z-index:611;
@@ -304,19 +366,19 @@ added by p.feeney 3-dec-2012
 				}
 #FTi #tab_0 #allPies .questionBox_2 {
 				position: absolute;
-				top: 600px;
-				left: 620px;
+				top: 590px;
+				left: 696px;
 				text-align: center;
 				color:#333;
 				z-index:612;
 				line-height:28px;
 				font-family:Georgia, "Times New Roman", Times, serif;
 				}
-#FTi #tab_1 #container_friendliness_table {width: 862px; height: 260px; position: absolute; top:175px; left: 12px; z-index:600}
-#FTi #tab_1 #container_friendliness {height: 180px; left: 6px; position: absolute; top: 505px; width: 900px; z-index: 600;}
-#FTi #tab_2 #container_barRisks {width: 876px; height: 450px; position: absolute; top: 180px; left: 6px; z-index:600}
+#FTi #tab_1 #container_friendliness_table {width: 952px; height: 260px; position: absolute; top:175px; left: 12px; z-index:600}
+#FTi #tab_1 #container_friendliness {height: 180px; left: 2px; position: absolute; top: 505px; width: 982px; z-index: 600;}
+#FTi #tab_2 #container_barRisks {width: 962px; height: 450px; position: absolute; top: 180px; left: 6px; z-index:600}
 #container_friendliness_table th  {
-	font-family:Arial, Helvetica, sans-serif;
+	font-family:BentonSans, Arial, Helvetica, sans-serif;
 	font-size:11px;
 	width: 861px;
 	background-color:#e9decf;
@@ -342,7 +404,7 @@ added by p.feeney 3-dec-2012
 }
 
 #container_friendliness_table td {
-	font-family:Arial, Helvetica, sans-serif;
+	font-family:BentonSans, Arial, Helvetica, sans-serif;
 	font-size:11px;
 	border-bottom: 1px solid #a7a59b;
 	height: 24px;
@@ -361,20 +423,20 @@ rowTint {
 	font-family:Georgia, "Times New Roman", Times, serif;
 	color: #333;
 	padding-left:10px;
-	padding-top:8px;
-	background-color: #d5cbbd;
-	height:50px;
+	padding-top:12px;
+	background-color: #fff1e0;
+	height:48px;
 	width:962px;
 	position:absolute;
 	top: 46px;		
 }
-#blurbTitle { font-size:20px;line-height:18px;font-weight:bold; }
+#blurbTitle { font-size:20px;line-height:18px;font-weight:bold;margin-bottom:6px;}
 #blurbText { font-size:13px }
-#chartLabel {position: absolute; top: 133px; left: 14px;  z-index:505}
-#dropDown_0 {position:absolute;top:110px;left:350px;z-index:700}
-#dropDown_1 {position:absolute;top:128px;left:620px;z-index:700;display:none;}
-#FTi #dateSelect { position:absolute;top:4px;left:296px;display:inline-block;width:300px; margin-top:6px;z-index:1000  }
-#FTi #selectYr { width:240px; float:left; }
+#chartLabel {position: absolute; top: 135px; left: 14px;  z-index:505; font-family:BentonSans, Arial, Helvetica, sans-serif; font-weight:bold;}
+#dropDown_0 {position:absolute;top:120px;left:326px;z-index:700;line-height:18px;font-size:10px;font-family:BentonSans, Arial, Helvetica, sans-serif}
+#dropDown_1 {position:absolute;top:120px;left:620px;z-index:700;line-height:18px;display:none;font-size:10px;font-family:BentonSans, Arial, Helvetica, sans-serif;}
+#FTi #dateSelect { position:absolute;top:4px;left:296px;display:inline-block;width:240px; margin-top:12px;z-index:1000  }
+#FTi #selectYr { width:240px; float:left; margin-left:30px; }
 #FTi .oddText { float:left;margin-left:100px;color: #3C6; }
 
 .topicalQuestion {
@@ -396,7 +458,7 @@ rowTint {
 
 .yesBar {
 	background-color:#9e2f50;
-	width:420px;
+	width:100%;
 	height:20px;
 	margin-top:10px;
 	position:relative;
@@ -420,7 +482,7 @@ rowTint {
 	position:relative;
 	top:-30px;
 	float:left;	
-	width:420px;
+	width:100%;
 }
 
 .pieTopical {
@@ -429,4 +491,18 @@ rowTint {
 	width: 274px;
 	margin-right: 0px;
 	float:left;	
+}
+
+/*
+	additions of social buttons
+*/
+#social-button {
+	/*
+    background: url("../img/shareIcons.svg") no-repeat scroll 0 0 transparent;
+	*/
+    float: left;
+    height: 30px;
+    margin-top: -50px;
+    padding-left: 40px;
+    width: 195px;
 }

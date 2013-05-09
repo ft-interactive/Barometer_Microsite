@@ -7,10 +7,16 @@
 <file name="jquery-ui-1.8.16.custom.min.js" server="interactive.ftdata.co.uk" local="130032370070000000" remote="130032370070000000" Dst="1" />
 <file name="_script.js" server="interactive.ftdata.co.uk" local="130032641167023276" remote="130032641210000000" Dst="1" />
 <file name="jquery-1.9.0.min.js" server="interactive.ftdata.co.uk" local="130032376664798316" remote="130032388670000000" Dst="1" />
-<file name="init.js" server="92.48.79.66" local="130034262169444874" remote="130034262240000000" Dst="1" />
-<file name="_script.js" server="92.48.79.66" local="130034193414730276" remote="130034193510000000" Dst="1" />
+<file name="init.js" server="92.48.79.66" local="130039452761600499" remote="130039452820000000" Dst="1" />
+<file name="_script.js" server="92.48.79.66" local="130039524210000000" remote="130039524210000000" Dst="1" />
 <file name="jquery-1.9.0.min.js" server="92.48.79.66" local="130032376664798316" remote="130034285380000000" Dst="1" />
 <file name="jquery.tablesorter.js" server="92.48.79.66" local="130032370070000000" remote="130032370070000000" Dst="1" />
 <file name="jquery-ui-1.8.16.custom.min.js" server="92.48.79.66" local="130032370070000000" remote="130032370070000000" Dst="1" />
 <file name="highcharts.js" server="92.48.79.66" local="130032370420000000" remote="130032370420000000" Dst="1" />
+<file name="jquery-1.9.0.min.js" server="ftlnx109-lviw-uk-p//opt/customer/apps/interactive.ftdata.co.uk/var/www/html/" local="130034249380000000" remote="130034249380000000" Dst="2" />
+<file name="jquery.tablesorter.js" server="ftlnx109-lviw-uk-p//opt/customer/apps/interactive.ftdata.co.uk/var/www/html/" local="130032334070000000" remote="130032334070000000" Dst="2" />
+<file name="jquery-ui-1.8.16.custom.min.js" server="ftlnx109-lviw-uk-p//opt/customer/apps/interactive.ftdata.co.uk/var/www/html/" local="130032334070000000" remote="130032334070000000" Dst="2" />
+<file name="highcharts.js" server="ftlnx109-lviw-uk-p//opt/customer/apps/interactive.ftdata.co.uk/var/www/html/" local="130058383120000000" remote="130058383120000000" Dst="2" />
+<file name="init.js" server="ftlnx109-lviw-uk-p//opt/customer/apps/interactive.ftdata.co.uk/var/www/html/" local="130059171500000000" remote="130059171500000000" Dst="2" />
+<file name="_script.js" server="ftlnx109-lviw-uk-p//opt/customer/apps/interactive.ftdata.co.uk/var/www/html/" local="130125042867953995" remote="130125652780000000" Dst="2" />
 </dwsync>

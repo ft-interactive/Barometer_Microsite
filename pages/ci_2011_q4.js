@@ -7,9 +7,11 @@
 	htmlElements += '<p> The original content was developed in another technology that is no longer supported.<br/>';
 	htmlElements += 'You will find the original content <a href="http://www.ft.com/cms/s/0/09dad466-58af-11e1-9f28-00144feabdc0.html">here</a> </p>';
 	htmlElements += '</div>';
-	$('#dropDown_0').css('display', 'none');
+	//$('#dropDown_0').css('display', 'none');
 	$('#blurbText').html('');
 	$('#chartLabel').html('');
 	$('#tab_3').html(htmlElements);
+	$('div#dropDown_0').css("visibility", "hidden");
+	$('#sectionBlurb').css("visibility", "hidden");
 	
 }(FT.Interactive));
